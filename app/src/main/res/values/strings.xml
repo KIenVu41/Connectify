@@ -1,3 +1,17 @@
 <resources>
     <string name="app_name">Connectify</string>
+    <!-- Signup -->
+    <string name="signup_title">Tạo \ntài khoản</string>
+    <string name="login_title">Đăng nhập</string>
+    <string name="hint_name">Họ tên</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_password">Mật khẩu</string>
+    <string name="hint_re_password">Nhập lại mật khẩu</string>
+    <string name="btn_signup">Đăng ký</string>
+    <string name="btn_signin_google">Đăng nhập với Google</string>
+    <string name="back_to_login">Đã có tài khoản, đăng nhập</string>
+    <string name="create_account">Tạo tài khoản</string>
+    <string name="forgot_password">Quên mật khẩu</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
