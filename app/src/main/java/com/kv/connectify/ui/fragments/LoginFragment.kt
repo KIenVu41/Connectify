@@ -63,6 +63,7 @@ class LoginFragment : Fragment() {
 
     private fun clickListener() {
         binding.forgotTV.setOnClickListener(View.OnClickListener {
+            (activity as? FragmentReplacerActivity)?.setFragment(ForgotPassword())
         })
         binding.loginBtn.setOnClickListener(object : View.OnClickListener {
             override fun onClick(v: View?) {
@@ -175,6 +176,20 @@ class LoginFragment : Fragment() {
                 e.printStackTrace()
             }
         }
+    }
+
+    private fun removeListener() {
+        if (::binding.isInitialized) {
+            binding.signUpTV.setOnClickListener(null)
+            binding.googleSignInBtn.setOnClickListener(null)
+            binding.loginBtn.setOnClickListener(null)
+            binding.forgotTV.setOnClickListener(null)
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        removeListener()
     }
 
 }

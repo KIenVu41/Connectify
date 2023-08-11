@@ -2,8 +2,11 @@
     android:width="398dp"
     android:height="736dp"
     android:viewportWidth="398"
-    android:viewportHeight="736">
-  <group>
+    android:viewportHeight="736"
+    android:autoMirrored="true">
+  <group
+      android:scaleX="-1"
+      android:translateX="398">
     <clip-path
         android:pathData="M0,0h398v736h-398z"/>
     <path
