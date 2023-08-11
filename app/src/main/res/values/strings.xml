@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Connectify</string>
     <!-- Login & Signup -->
-    <string name="signup_title">Tạo \ntài khoản</string>
+    <string name="signup_title">Tạo tài khoản</string>
     <string name="login_title">Đăng nhập</string>
     <string name="hint_name">Họ tên</string>
     <string name="hint_email">Email</string>
@@ -12,11 +12,15 @@
     <string name="back_to_login">Đã có tài khoản, đăng nhập</string>
     <string name="create_account">Tạo tài khoản</string>
     <string name="forgot_password">Quên mật khẩu</string>
+    <string name="error">Lỗi: </string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Validate    -->
     <string name="invalid_name">Vui lòng nhập tên hợp lệ</string>
     <string name="invalid_email">Vui lòng nhập email hợp lệ</string>
+    <string name="verify_email">Vui lòng xác nhận email</string>
+    <string name="verify_email_link">Đường dẫn xác thực email đã được gửi</string>
     <string name="invalid_password">Vui lòng nhập mật khẩu hợp lệ</string>
+    <string name="invalid_password_length">Mật khẩu chứa ít nhất 6 kí tự</string>
     <string name="password_not_match">Mật khẩu không trùng khớp</string>
 </resources>

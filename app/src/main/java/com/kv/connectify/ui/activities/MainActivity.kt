@@ -1,4 +1,4 @@
-package com.kv.connectify
+package com.kv.connectify.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

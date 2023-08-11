@@ -1,15 +1,15 @@
-package com.kv.connectify
+package com.kv.connectify.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.kv.connectify.databinding.ActivityFragmentReplacerBinding
-import com.kv.connectify.fragments.CreateAccountFragment
-import com.kv.connectify.fragments.LoginFragment
+import com.kv.connectify.ui.fragments.CreateAccountFragment
+import com.kv.connectify.ui.fragments.LoginFragment
 
 class FragmentReplacerActivity : AppCompatActivity() {
 
-    private lateinit var binding:ActivityFragmentReplacerBinding
+    private lateinit var binding: ActivityFragmentReplacerBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

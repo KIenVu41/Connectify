@@ -4,18 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/ic_background"
-    tools:context=".fragments.CreateAccountFragment">
+    tools:context=".ui.fragments.CreateAccountFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/dp_16"
-        android:layout_marginLeft="@dimen/dp_16"
-        android:layout_marginTop="@dimen/dp_78"
-        android:text="@string/login_title"
-        android:textColor="@color/colorGreen"
-        android:textSize="@dimen/sp_24"
-        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/ll1"
@@ -23,6 +13,16 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
         android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/dp_78"
+            android:text="@string/login_title"
+            android:textColor="@color/colorGreen"
+            android:textSize="@dimen/sp_24"
+            android:textStyle="bold" />
 
         <EditText
             android:id="@+id/emailET"
@@ -37,6 +37,7 @@
             android:id="@+id/passwordET"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textPassword"
             android:layout_margin="@dimen/dp_8"
             android:background="@drawable/text_box"
             android:hint="@string/hint_password"

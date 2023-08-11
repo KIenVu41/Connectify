@@ -1,16 +1,21 @@
-package com.kv.connectify.fragments
+package com.kv.connectify.ui.fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
-import com.kv.connectify.FragmentReplacerActivity
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.FirebaseFirestore
+import com.kv.connectify.ui.activities.FragmentReplacerActivity
+import com.kv.connectify.ui.activities.MainActivity
 import com.kv.connectify.R
-import com.kv.connectify.databinding.ActivityFragmentReplacerBinding
 import com.kv.connectify.databinding.FragmentCreateAccountBinding
-import com.kv.connectify.utils.Constants
 import com.kv.connectify.utils.Utils
 
 class CreateAccountFragment : Fragment(), View.OnClickListener {
@@ -75,7 +80,53 @@ class CreateAccountFragment : Fragment(), View.OnClickListener {
                 }
 
                 binding.progressBar.visibility = View.VISIBLE
+                createAccount(name, email, password)
             }
+        }
+    }
+
+    private fun createAccount(name: String, email: String, password: String) {
+        auth?.createUserWithEmailAndPassword(email, password)
+            ?.addOnCompleteListener(OnCompleteListener<AuthResult> {
+                if (it.isSuccessful) {
+                    val user = auth?.currentUser
+                    user?.sendEmailVerification()
+                        ?.addOnCompleteListener(OnCompleteListener {
+                            if (it.isSuccessful) {
+                                Toast.makeText(activity, activity?.resources?.getString(R.string.verify_email_link), Toast.LENGTH_SHORT).show()
+                            }
+                        })
+                    uploadUser(user, name, email)
+                } else {
+                    binding.progressBar.visibility = View.GONE
+                    val exception = it.exception?.message ?: ""
+                    activity?.let {
+                        Toast.makeText(it, it.resources?.getString(R.string.error) + exception, Toast.LENGTH_SHORT).show()
+                    }
+                }
+            })
+    }
+
+    private fun uploadUser(user: FirebaseUser?, name: String, email: String) {
+        val map: Map<String, Any> = hashMapOf("name" to name, "email" to email,
+        "profileImage" to " ", "uid" to (user?.uid ?: "")
+        )
+
+        user?.uid?.let {
+            FirebaseFirestore.getInstance().collection("Users").document(it)
+                .set(map)
+                .addOnCompleteListener(OnCompleteListener {
+                    binding.progressBar.visibility = View.GONE
+                    if (it.isSuccessful) {
+                        startActivity(Intent(activity?.applicationContext, MainActivity::class.java))
+                        activity?.finish()
+                    } else {
+                        val exception = it.exception?.message ?: ""
+                        activity?.let {
+                            Toast.makeText(it, it.resources?.getString(R.string.error) + exception, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                })
         }
     }
 
