@@ -14,4 +14,5 @@
     <color name="colorGreyLight">#E6E6E6</color>
     <color name="colorGreyDark">#7B7B7B</color>
     <color name="colorLightBlue">#FAFAFC</color>
+    <color name="border_round_image">#434343</color>
 </resources>

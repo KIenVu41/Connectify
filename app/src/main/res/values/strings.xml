@@ -25,4 +25,10 @@
     <string name="invalid_password">Vui lòng nhập mật khẩu hợp lệ</string>
     <string name="invalid_password_length">Mật khẩu chứa ít nhất 6 kí tự</string>
     <string name="password_not_match">Mật khẩu không trùng khớp</string>
+    <!-- Home    -->
+    <string name="view_all_comments">Xem tất cả bình luận</string>
+    <string name="like">Lượt thích</string>
+    <string name="likes">Lượt thích</string>
+    <string name="share_link">Chia sẻ liên kết ...</string>
+
 </resources>
