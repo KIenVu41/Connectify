@@ -36,6 +36,8 @@
     <string name="follow">Theo dõi</string>
     <string name="say_hi">Xin chào</string>
     <string name="posts">Bài đăng</string>
+    <string name="follow">Theo dõi</string>
+    <string name="unfollow">Hủy theo dõi</string>
     <!-- reminder    -->
     <string name="exit_click_twice">Nhấn lần nữa để thoát</string>
 
