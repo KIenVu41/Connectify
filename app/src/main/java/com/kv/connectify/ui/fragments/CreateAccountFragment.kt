@@ -108,9 +108,11 @@ class CreateAccountFragment : Fragment(), View.OnClickListener {
     }
 
     private fun uploadUser(user: FirebaseUser?, name: String, email: String) {
+        val list = listOf<String>()
+        val list1 = listOf<String>()
         val map: Map<String, Any> = hashMapOf("name" to name, "email" to email,
-        "profileImage" to " ", "uid" to (user?.uid ?: "")
-        )
+        "profileImage" to " ", "uid" to (user?.uid ?: ""), "status" to " ", "followers" to list, "following" to list1)
+
 
         user?.uid?.let {
             FirebaseFirestore.getInstance().collection("Users").document(it)

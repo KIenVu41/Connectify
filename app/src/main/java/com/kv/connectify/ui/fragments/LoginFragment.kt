@@ -144,9 +144,11 @@ class LoginFragment : Fragment() {
     }
 
     private fun updateUI(user: FirebaseUser) {
+        val list = listOf<String>()
+        val list1 = listOf<String>()
         val account = GoogleSignIn.getLastSignedInAccount(requireActivity())
         val map: Map<String, Any?> = hashMapOf("name" to account?.displayName, "email" to account?.email,
-        "profileImage" to account?.photoUrl, "uid" to user.uid)
+        "profileImage" to account?.photoUrl, "uid" to user.uid, "status" to " ", "followers" to list, "following" to list1)
 
         FirebaseFirestore.getInstance().collection("Users").document(user.uid)
             .set(map)

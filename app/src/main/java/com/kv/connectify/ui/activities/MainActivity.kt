@@ -2,18 +2,29 @@ package com.kv.connectify.ui.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
+import android.widget.Toast
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.kv.connectify.R
 import com.kv.connectify.adapter.ViewPagerAdapter
 import com.kv.connectify.databinding.ActivityMainBinding
+import kotlin.properties.Delegates
 
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private var pagerAdapter: ViewPagerAdapter? = null
+    private var doubleBackToExitPressedOnce = false
+    private var mHandler = Handler()
+    private val mRunnable = object : Runnable {
+        override fun run() {
+            doubleBackToExitPressedOnce = false
+        }
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -48,5 +59,22 @@ class MainActivity : AppCompatActivity() {
             3 -> return R.drawable.ic_heart_fill
         }
         return R.drawable.ic_home_fill
+    }
+
+    override fun onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed()
+            return
+        }
+        doubleBackToExitPressedOnce = true
+        Toast.makeText(this, this.resources?.getString(R.string.exit_click_twice), Toast.LENGTH_SHORT).show()
+        mHandler.postDelayed(mRunnable, 2000)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mHandler?.let {
+            it.removeCallbacks(mRunnable)
+        }
     }
 }

@@ -30,5 +30,13 @@
     <string name="like">Lượt thích</string>
     <string name="likes">Lượt thích</string>
     <string name="share_link">Chia sẻ liên kết ...</string>
+    <!-- Profile    -->
+    <string name="followers">Người theo dõi</string>
+    <string name="following">Đang theo dõi</string>
+    <string name="follow">Theo dõi</string>
+    <string name="say_hi">Xin chào</string>
+    <string name="posts">Bài đăng</string>
+    <!-- reminder    -->
+    <string name="exit_click_twice">Nhấn lần nữa để thoát</string>
 
 </resources>
