@@ -38,6 +38,11 @@
     <string name="posts">Bài đăng</string>
     <string name="follow">Theo dõi</string>
     <string name="unfollow">Hủy theo dõi</string>
+    <!-- Add   -->
+    <string name="comment_post">Nói gì đó về bài viết này</string>
+    <string name="uploaded">Đăng thành công</string>
+    <string name="upload_failed">Đăng không thành công</string>
+
     <!-- reminder    -->
     <string name="exit_click_twice">Nhấn lần nữa để thoát</string>
 
