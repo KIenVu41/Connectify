@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.kv.connectify.databinding.ActivityFragmentReplacerBinding
+import com.kv.connectify.ui.fragments.Comment
 import com.kv.connectify.ui.fragments.CreateAccountFragment
 import com.kv.connectify.ui.fragments.LoginFragment
 
@@ -19,7 +20,7 @@ class FragmentReplacerActivity : AppCompatActivity() {
         val isComment = intent.getBooleanExtra("", false)
 
         if (isComment) {
-
+            setFragment(Comment())
         } else {
             setFragment(LoginFragment())
         }

@@ -16,6 +16,7 @@ import com.kv.connectify.ui.activities.FragmentReplacerActivity
 import com.kv.connectify.ui.activities.MainActivity
 import com.kv.connectify.R
 import com.kv.connectify.databinding.FragmentCreateAccountBinding
+import com.kv.connectify.utils.Constants
 import com.kv.connectify.utils.Utils
 
 class CreateAccountFragment : Fragment(), View.OnClickListener {
@@ -115,7 +116,7 @@ class CreateAccountFragment : Fragment(), View.OnClickListener {
 
 
         user?.uid?.let {
-            FirebaseFirestore.getInstance().collection("Users").document(it)
+            FirebaseFirestore.getInstance().collection(Constants.COLLECTION_NAME).document(it)
                 .set(map)
                 .addOnCompleteListener(OnCompleteListener {
                     binding.progressBar.visibility = View.GONE

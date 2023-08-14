@@ -150,7 +150,7 @@ class LoginFragment : Fragment() {
         val map: Map<String, Any?> = hashMapOf("name" to account?.displayName, "email" to account?.email,
         "profileImage" to account?.photoUrl, "uid" to user.uid, "status" to " ", "followers" to list, "following" to list1)
 
-        FirebaseFirestore.getInstance().collection("Users").document(user.uid)
+        FirebaseFirestore.getInstance().collection(Constants.COLLECTION_NAME).document(user.uid)
             .set(map)
             .addOnCompleteListener(OnCompleteListener {
                 if (it.isSuccessful()) {
