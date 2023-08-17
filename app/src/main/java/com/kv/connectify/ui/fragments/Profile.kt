@@ -1,12 +1,16 @@
 package com.kv.connectify.ui.fragments
 
+import android.app.Activity.RESULT_OK
+import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -19,23 +23,27 @@ import com.firebase.ui.firestore.FirestoreRecyclerAdapter
 import com.firebase.ui.firestore.FirestoreRecyclerOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.kv.connectify.R
 import com.kv.connectify.databinding.FragmentProfileBinding
 import com.kv.connectify.databinding.HomeItemsBinding
 import com.kv.connectify.databinding.ProfileImageItemsBinding
 import com.kv.connectify.model.PostImageModel
 import com.kv.connectify.utils.Constants
+import com.theartofdev.edmodo.cropper.CropImage
+import com.theartofdev.edmodo.cropper.CropImageView
 
 class Profile : Fragment() {
 
     private var isMyProfile = true
     private lateinit var userUID: String
     private lateinit var adapter:FirestoreRecyclerAdapter<PostImageModel,PostImageHolder>
-    private lateinit var followersList: List<String>
-    private lateinit var followingList: List<String>
-    private lateinit var followingList_2: List<String>
+    private lateinit var followersList: MutableList<String>
+    private lateinit var followingList: MutableList<String>
+    private lateinit var followingList_2: MutableList<String>
     private var isFollowed = false
     private lateinit var userRef: DocumentReference
     private lateinit var myRef: DocumentReference
@@ -80,6 +88,74 @@ class Profile : Fragment() {
         loadPostImages()
 
         binding.recyclerView.adapter = adapter
+        clickListener()
+    }
+
+    private fun clickListener() {
+        binding.followBtn.setOnClickListener {
+            if (isFollowed) {
+                user?.let { it1 -> followersList.remove(it1.uid) }
+                followingList_2.remove(userUID)
+                val map_2: MutableMap<String, Any> = mutableMapOf()
+                map_2.put("following", followingList_2)
+
+                val map: MutableMap<String, Any> = mutableMapOf()
+                map.put("followers", followersList)
+
+                userRef.update(map).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        binding.followBtn.text = activity?.resources?.getString(R.string.follow)
+
+                        myRef.update(map_2).addOnCompleteListener { it2 ->
+                            if (it2.isSuccessful) {
+                                Toast.makeText(
+                                    requireActivity(),
+                                    requireActivity().resources.getString(R.string.unfollow),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                }
+            } else {
+                user?.let { it1 -> followersList.add(it1.uid) }
+                followingList_2.add(userUID)
+
+                val map_2:MutableMap<String, Any> = mutableMapOf()
+                map_2.put("following", followingList_2)
+
+                val map:MutableMap<String, Any> = mutableMapOf()
+                map.put("followers", followersList)
+
+                userRef.update(map).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        binding.followBtn.text = activity?.resources?.getString(R.string.unfollow)
+
+                        myRef.update(map_2).addOnCompleteListener { it2 ->
+                            if (it2.isSuccessful) {
+                                Toast.makeText(
+                                    requireActivity(),
+                                    requireActivity().resources.getString(R.string.follow),
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        binding.editProfileImage.setOnClickListener {
+            activity?.let { it1 ->
+                CropImage.activity()
+                    .setGuidelines(CropImageView.Guidelines.ON)
+                    .setAspectRatio(1, 1)
+                    .start(it1, this@Profile)
+            }
+        }
+        binding.startChatBtn.setOnClickListener {
+
+        }
     }
 
     private fun init() {
@@ -103,14 +179,14 @@ class Profile : Fragment() {
                     binding.toolbarNameTV.text = name
                     binding.statusTV.text = status
 
-                    followersList = it.get("followers") as List<String>
-                    followingList = it.get("following") as List<String>
+                    followersList = it.get("followers") as MutableList<String>
+                    followingList = it.get("following") as MutableList<String>
 
                     binding.followersCountTv.text = "${followersList.size}"
                     binding.followingCountTv.text = "${followingList.size}"
 
-                    activity?.let {
-                        Glide.with(it.applicationContext)
+                    activity?.let { it1 ->
+                        Glide.with(it1.applicationContext)
                             .load(profileURL)
                             .placeholder(R.drawable.ic_person)
                             .circleCrop()
@@ -138,8 +214,8 @@ class Profile : Fragment() {
                             .timeout(6500)
                             .into(binding.profileImage)
                     }
-                    user?.uid?.let {
-                        if (followersList.contains(it)) {
+                    user?.uid?.let { it2 ->
+                        if (followersList.contains(it2)) {
                             binding.followBtn.text = activity?.resources?.getString(R.string.unfollow)
                             isFollowed = true
                             binding.startChatBtn.visibility = View.VISIBLE
@@ -186,6 +262,12 @@ class Profile : Fragment() {
         }
     }
 
+    private fun removeListener() {
+        binding.followBtn.setOnClickListener(null)
+        binding.editProfileImage.setOnClickListener(null)
+        binding.startChatBtn.setOnClickListener(null)
+    }
+
     override fun onStart() {
         super.onStart()
         adapter.startListening()
@@ -194,6 +276,53 @@ class Profile : Fragment() {
     override fun onStop() {
         super.onStop()
         adapter.stopListening()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        removeListener()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE && resultCode == RESULT_OK) {
+            val result = CropImage.getActivityResult(data)
+            result?.let {
+                val uri = it.uri
+                uploadImage(uri)
+            }
+        }
+    }
+
+    private fun uploadImage(uri: Uri) {
+        val reference = FirebaseStorage.getInstance().reference.child(Constants.PROFILE_IMAGES)
+        reference.putFile(uri)
+            .addOnCompleteListener {
+                if (it.isSuccessful) {
+                    reference.downloadUrl
+                        .addOnSuccessListener { it1 ->
+                            val imageURL = it1.toString()
+                            val request = UserProfileChangeRequest.Builder()
+                            request.photoUri = it1
+                            user?.updateProfile(request.build())
+                            val map:MutableMap<String, Any> = mutableMapOf()
+                            map.put("profileImage", imageURL)
+                            user?.let { it3 ->
+                                FirebaseFirestore.getInstance().collection(Constants.COLLECTION_NAME)
+                                    .document(it3.uid)
+                                    .update(map).addOnCompleteListener { it4 ->
+                                        if (it4.isSuccessful) {
+                                            Toast.makeText(requireActivity(), requireActivity().resources?.getString(R.string.updated_successful), Toast.LENGTH_SHORT).show()
+                                        } else {
+                                            Toast.makeText(requireActivity(), requireActivity().resources?.getString(R.string.error) + it4.exception?.message , Toast.LENGTH_SHORT).show()
+                                        }
+                                    }
+                            }
+                        }
+                } else {
+                    Toast.makeText(requireActivity(), requireActivity().resources?.getString(R.string.error) + it.exception?.message , Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 
     inner class PostImageHolder(val bindingProfile: ProfileImageItemsBinding): RecyclerView.ViewHolder(bindingProfile.root)

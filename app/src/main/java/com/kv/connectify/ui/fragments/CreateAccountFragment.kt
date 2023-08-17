@@ -98,8 +98,8 @@ class CreateAccountFragment : Fragment(), View.OnClickListener {
                     request.photoUri = Uri.parse(Constants.DEFAULT_AVT)
                     user?.updateProfile(request.build())
                     user?.sendEmailVerification()
-                        ?.addOnCompleteListener(OnCompleteListener {
-                            if (it.isSuccessful) {
+                        ?.addOnCompleteListener(OnCompleteListener { it1 ->
+                            if (it1.isSuccessful) {
                                 Toast.makeText(activity, activity?.resources?.getString(R.string.verify_email_link), Toast.LENGTH_SHORT).show()
                             }
                         })
@@ -107,8 +107,8 @@ class CreateAccountFragment : Fragment(), View.OnClickListener {
                 } else {
                     binding.progressBar.visibility = View.GONE
                     val exception = it.exception?.message ?: ""
-                    activity?.let {
-                        Toast.makeText(it, it.resources?.getString(R.string.error) + exception, Toast.LENGTH_SHORT).show()
+                    activity?.let { it2 ->
+                        Toast.makeText(it2, it2.resources?.getString(R.string.error) + exception, Toast.LENGTH_SHORT).show()
                     }
                 }
             })
@@ -124,15 +124,15 @@ class CreateAccountFragment : Fragment(), View.OnClickListener {
         user?.uid?.let {
             FirebaseFirestore.getInstance().collection(Constants.COLLECTION_NAME).document(it)
                 .set(map)
-                .addOnCompleteListener(OnCompleteListener {
+                .addOnCompleteListener(OnCompleteListener { it2 ->
                     binding.progressBar.visibility = View.GONE
-                    if (it.isSuccessful) {
+                    if (it2.isSuccessful) {
                         startActivity(Intent(activity?.applicationContext, MainActivity::class.java))
                         activity?.finish()
                     } else {
-                        val exception = it.exception?.message ?: ""
-                        activity?.let {
-                            Toast.makeText(it, it.resources?.getString(R.string.error) + exception, Toast.LENGTH_SHORT).show()
+                        val exception = it2.exception?.message ?: ""
+                        activity?.let { it3 ->
+                            Toast.makeText(it3, it3.resources?.getString(R.string.error) + exception, Toast.LENGTH_SHORT).show()
                         }
                     }
                 })

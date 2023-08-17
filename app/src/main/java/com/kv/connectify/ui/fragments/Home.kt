@@ -130,4 +130,9 @@ class Home : Fragment() {
                 }
         }
     }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.sendBtn.setOnClickListener(null)
+    }
 }

@@ -86,7 +86,12 @@ class HomeAdapter(var list: List<HomeModel>, val activity: Activity, val onPress
                     .timeout(7000)
                     .into(binding.imageView)
             }
-            this
+            this.clickListener(position,
+                list.get(position).id,
+                list.get(position).name,
+                list.get(position).uid,
+                list.get(position).likes,
+                list.get(position).imageUrl)
         }
     }
 

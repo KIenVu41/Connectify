@@ -153,7 +153,7 @@ class LoginFragment : Fragment() {
         FirebaseFirestore.getInstance().collection(Constants.COLLECTION_NAME).document(user.uid)
             .set(map)
             .addOnCompleteListener(OnCompleteListener {
-                if (it.isSuccessful()) {
+                if (it.isSuccessful) {
                     binding.progressBar.visibility = View.GONE
                     sendUserToApp();
                 } else {

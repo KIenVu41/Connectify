@@ -73,8 +73,6 @@ class MainActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mHandler?.let {
-            it.removeCallbacks(mRunnable)
-        }
+        mHandler.removeCallbacks(mRunnable)
     }
 }
