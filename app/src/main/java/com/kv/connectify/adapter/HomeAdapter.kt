@@ -19,10 +19,10 @@ import com.kv.connectify.ui.activities.FragmentReplacerActivity
 import com.kv.connectify.ui.fragments.Home
 import java.util.Random
 
-class HomeAdapter(var list: List<HomeModel>, val activity: Activity, val onPressed: OnPressed ): RecyclerView.Adapter<HomeAdapter.HomeHolder>() {
+class HomeAdapter(var list: MutableList<HomeModel>, val activity: Activity, val onPressed: OnPressed ): RecyclerView.Adapter<HomeAdapter.HomeHolder>() {
 
     inner class HomeHolder(val binding: HomeItemsBinding): RecyclerView.ViewHolder(binding.root) {
-        fun clickListener(position: Int, id: String, name: String, uid: String, likes: List<String>, imageUrl: String ) {
+        fun clickListener(position: Int, id: String, name: String, uid: String, likes: MutableList<String>, imageUrl: String ) {
             binding.commentBtn.setOnClickListener(View.OnClickListener {
                 val intent = Intent(activity, FragmentReplacerActivity::class.java)
                 intent.putExtra("id", id)
@@ -96,7 +96,7 @@ class HomeAdapter(var list: List<HomeModel>, val activity: Activity, val onPress
     }
 
     interface OnPressed {
-        fun onLiked(position: Int, id: String, uid: String, likeList: List<String>, isChecked: Boolean)
+        fun onLiked(position: Int, id: String, uid: String, likeList: MutableList<String>, isChecked: Boolean)
         fun setCommentCount(textView: TextView)
     }
 }

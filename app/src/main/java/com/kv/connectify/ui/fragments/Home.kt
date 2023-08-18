@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
@@ -17,9 +18,11 @@ import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.ktx.toObject
 import com.kv.connectify.R
 import com.kv.connectify.adapter.HomeAdapter
+import com.kv.connectify.adapter.StoriesAdapter
 import com.kv.connectify.databinding.FragmentHomeBinding
 import com.kv.connectify.databinding.HomeItemsBinding
 import com.kv.connectify.model.HomeModel
+import com.kv.connectify.model.StoriesModel
 import com.kv.connectify.utils.Constants
 
 class Home : Fragment() {
@@ -27,7 +30,9 @@ class Home : Fragment() {
     private val commentCount:MutableLiveData<Int> = MutableLiveData<Int>()
     private lateinit var binding: FragmentHomeBinding
     private var adapter: HomeAdapter? = null
+    private var storiesAdapter: StoriesAdapter? = null
     private var list: MutableList<HomeModel>? = null
+    private var storiesModelList: MutableList<StoriesModel>? = null
     private lateinit var user: FirebaseUser
 
     override fun onCreateView(
@@ -46,20 +51,48 @@ class Home : Fragment() {
 
         val onPressed = object : HomeAdapter.OnPressed {
             override fun setCommentCount(textView: TextView) {
+                commentCount.observe(activity as LifecycleOwner) {
+                    commentCount.value?.let { it1 ->
+                        if (it1 == 0) {
+                            textView.visibility = View.GONE
+                        } else {
+                            textView.visibility = View.VISIBLE
+                        }
 
+                        val builder = StringBuffer()
+                        builder.append("")
+                            .append(it1)
+                            .append(" ")
+                        textView.setText(builder)
+                    }
+                }
             }
 
             override fun onLiked(
                 position: Int,
                 id: String,
                 uid: String,
-                likeList: List<String>,
+                likeList: MutableList<String>,
                 isChecked: Boolean
             ) {
+                val reference = FirebaseFirestore.getInstance().collection(Constants.COLLECTION_NAME)
+                    .document(uid)
+                    .collection(Constants.POST_IMAGES)
+                    .document(id)
 
+                if (likeList.contains(user.uid)) {
+                    likeList.remove(user.uid)
+                } else {
+                    likeList.add(user.uid)
+                }
+
+                val map: MutableMap<String, Any> = mutableMapOf()
+                map.put("likes", likeList)
+
+                reference.update(map)
             }
         }
-        list = ArrayList<HomeModel>()
+        list = mutableListOf<HomeModel>()
         adapter = list?.let { activity?.let { it1 -> HomeAdapter(it, it1, onPressed) } }
         binding.recyclerView.adapter = adapter
 
@@ -97,7 +130,7 @@ class Home : Fragment() {
             if (value == null) {
                 return@addSnapshotListener
             }
-            val uidList = value.get("following") as List<String>
+            val uidList = value.get("following") as? List<String>
             if (uidList == null || uidList.isEmpty()) {
                 return@addSnapshotListener
             }

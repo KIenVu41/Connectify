@@ -28,6 +28,7 @@ import com.kv.connectify.R
 import com.kv.connectify.adapter.GalleryAdapter
 import com.kv.connectify.databinding.FragmentAddBinding
 import com.kv.connectify.model.GalleryImages
+import com.kv.connectify.ui.activities.MainActivity
 import com.kv.connectify.utils.Constants
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -107,6 +108,9 @@ class Add : Fragment() {
                     }
                 }
         }
+        binding.backBtn.setOnClickListener {
+            (activity as? MainActivity)?.binding?.tabLayout?.getTabAt(0)?.select()
+        }
     }
 
     private fun uploadData(imageURL: String?) {
@@ -125,7 +129,7 @@ class Add : Fragment() {
         map.put("name", user?.displayName ?: " ")
         map.put("profileImage", user?.photoUrl.toString() ?: " ")
 
-        map.put("likes", list)
+        map.put("likes", likes)
         map.put("uid", user?.uid ?: " ")
 
         reference.document(id).set(map)
@@ -180,7 +184,7 @@ class Add : Fragment() {
 
         if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
             val result = CropImage.getActivityResult(data)
-            if (requestCode == RESULT_OK) {
+            if (resultCode == RESULT_OK) {
                 result?.let {
                     imageUri = it.uri
                     activity?.let { it1 ->
@@ -198,5 +202,6 @@ class Add : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         binding.nextBtn.setOnClickListener(null)
+        binding.backBtn.setOnClickListener(null)
     }
 }

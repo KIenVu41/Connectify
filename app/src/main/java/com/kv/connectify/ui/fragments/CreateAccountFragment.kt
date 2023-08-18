@@ -118,7 +118,7 @@ class CreateAccountFragment : Fragment(), View.OnClickListener {
         val list = listOf<String>()
         val list1 = listOf<String>()
         val map: Map<String, Any> = hashMapOf("name" to name, "email" to email,
-        "profileImage" to " ", "uid" to (user?.uid ?: ""), "status" to " ", "followers" to list, "following" to list1)
+        "profileImage" to " ", "uid" to (user?.uid ?: ""), "status" to " ", "search" to name.lowercase() ,"followers" to list, "following" to list1)
 
 
         user?.uid?.let {

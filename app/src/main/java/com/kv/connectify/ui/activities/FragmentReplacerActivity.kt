@@ -17,7 +17,7 @@ class FragmentReplacerActivity : AppCompatActivity() {
         binding = ActivityFragmentReplacerBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val isComment = intent.getBooleanExtra("", false)
+        val isComment = intent.getBooleanExtra("isComment", false)
 
         if (isComment) {
             setFragment(Comment())
@@ -31,6 +31,16 @@ class FragmentReplacerActivity : AppCompatActivity() {
 
         if (fragment is CreateAccountFragment) {
             fragmentTransaction.addToBackStack(null)
+        }
+
+        if (fragment is Comment) {
+            val id = intent.getStringExtra("id")
+            val uid = intent.getStringExtra("uid")
+
+            val bundle = Bundle()
+            bundle.putString("id", id)
+            bundle.putString("uid", uid)
+            fragment.arguments = bundle
         }
 
         fragmentTransaction.replace(binding.frameLayout.id, fragment)

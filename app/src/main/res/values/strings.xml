@@ -30,13 +30,13 @@
     <string name="like">Lượt thích</string>
     <string name="likes">Lượt thích</string>
     <string name="share_link">Chia sẻ liên kết ...</string>
+    <string name="allow_per">Vui lòng cấp quyền cho ứng dụng</string>
     <!-- Profile    -->
     <string name="followers">Người theo dõi</string>
     <string name="following">Đang theo dõi</string>
     <string name="follow">Theo dõi</string>
     <string name="say_hi">Xin chào</string>
     <string name="posts">Bài đăng</string>
-    <string name="follow">Theo dõi</string>
     <string name="unfollow">Hủy theo dõi</string>
     <!-- Add   -->
     <string name="comment_post">Nói gì đó về bài viết này</string>
