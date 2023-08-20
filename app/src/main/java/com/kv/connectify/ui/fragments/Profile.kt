@@ -32,6 +32,7 @@ import com.kv.connectify.databinding.FragmentProfileBinding
 import com.kv.connectify.databinding.HomeItemsBinding
 import com.kv.connectify.databinding.ProfileImageItemsBinding
 import com.kv.connectify.model.PostImageModel
+import com.kv.connectify.ui.activities.MainActivity
 import com.kv.connectify.utils.Constants
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
@@ -68,6 +69,11 @@ class Profile : Fragment() {
         user?.uid?.let {
             myRef = FirebaseFirestore.getInstance().collection(Constants.COLLECTION_NAME)
                 .document(it)
+        }
+
+        if (MainActivity.IS_SEARCHED_USER) {
+            isMyProfile = false
+            userUID = MainActivity.USER_ID
         }
 
         if (isMyProfile) {

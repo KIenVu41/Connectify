@@ -31,6 +31,8 @@
     <string name="likes">Lượt thích</string>
     <string name="share_link">Chia sẻ liên kết ...</string>
     <string name="allow_per">Vui lòng cấp quyền cho ứng dụng</string>
+    <string name="see_all">Xem tất cả</string>
+    <string name="comments"> bình luận</string>
     <!-- Profile    -->
     <string name="followers">Người theo dõi</string>
     <string name="following">Đang theo dõi</string>

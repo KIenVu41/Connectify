@@ -7,6 +7,8 @@ object Constants {
     val COLLECTION_NAME = "Users"
     val POST_IMAGES = "Post Images"
     val PROFILE_IMAGES = "Profile Images"
+    val STORIES = "Stories"
+    val NOTIFICATIONS = "Notifications"
     val DEFAULT_AVT = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwp--EwtYaxkfsSPIpoSPucdbxAo6PancQX1gw6ETSKI6_pGNCZY4ts1N6BV5ZcN3wPbA&usqp=CAU"
     val PREF_STORED = "connectify_store"
     val PREF_URL = "connectify_url"

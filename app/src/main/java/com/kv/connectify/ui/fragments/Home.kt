@@ -60,10 +60,10 @@ class Home : Fragment() {
                         }
 
                         val builder = StringBuffer()
-                        builder.append("")
+                        builder.append(activity?.resources?.getString(R.string.see_all))
                             .append(it1)
-                            .append(" ")
-                        textView.setText(builder)
+                            .append(activity?.resources?.getString(R.string.comments))
+                        textView.text = builder
                     }
                 }
             }
@@ -113,6 +113,14 @@ class Home : Fragment() {
         binding.recyclerView.setHasFixedSize(true)
         binding.recyclerView.layoutManager = LinearLayoutManager(activity)
 
+        binding.storiesRecyclerView.setHasFixedSize(true)
+        binding.storiesRecyclerView.layoutManager = LinearLayoutManager(activity, LinearLayoutManager.HORIZONTAL, false)
+
+        storiesModelList = mutableListOf<StoriesModel>()
+        storiesModelList!!.add(StoriesModel("","","","",""))
+        storiesAdapter = StoriesAdapter(requireActivity(), storiesModelList!!)
+        binding.storiesRecyclerView.adapter = storiesAdapter
+
         val auth = FirebaseAuth.getInstance()
         auth.currentUser?.let {
             user = it
@@ -161,6 +169,22 @@ class Home : Fragment() {
                     }
                     adapter?.notifyDataSetChanged()
                 }
+            loadStories(uidList)
+        }
+    }
+
+    private fun loadStories(followingList: List<String>) {
+        val query = FirebaseFirestore.getInstance().collection(Constants.STORIES)
+        query.whereIn("udi", followingList).addSnapshotListener { value, error ->
+            value?.let {
+                for (snapshot: QueryDocumentSnapshot in it) {
+                    if (!it.isEmpty) {
+                        val model = snapshot.toObject<StoriesModel>(StoriesModel::class.java)
+                        storiesModelList?.add(model)
+                    }
+                }
+                storiesAdapter?.notifyDataSetChanged()
+            }
         }
     }
 
