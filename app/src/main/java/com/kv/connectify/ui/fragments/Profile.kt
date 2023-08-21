@@ -42,9 +42,9 @@ class Profile : Fragment() {
     private var isMyProfile = true
     private lateinit var userUID: String
     private lateinit var adapter:FirestoreRecyclerAdapter<PostImageModel,PostImageHolder>
-    private lateinit var followersList: MutableList<String>
-    private lateinit var followingList: MutableList<String>
-    private lateinit var followingList_2: MutableList<String>
+    private var followersList: MutableList<String>? = null
+    private var followingList: MutableList<String>? = null
+    private var followingList_2: MutableList<String>? = null
     private var isFollowed = false
     private lateinit var userRef: DocumentReference
     private lateinit var myRef: DocumentReference
@@ -104,13 +104,13 @@ class Profile : Fragment() {
     private fun clickListener() {
         binding.followBtn.setOnClickListener {
             if (isFollowed) {
-                user?.let { it1 -> followersList.remove(it1.uid) }
-                followingList_2.remove(userUID)
+                user?.let { it1 -> followersList?.remove(it1.uid) }
+                followingList_2?.remove(userUID)
                 val map_2: MutableMap<String, Any> = mutableMapOf()
-                map_2.put("following", followingList_2)
+                followingList_2?.let { it1 -> map_2.put("following", it1) }
 
                 val map: MutableMap<String, Any> = mutableMapOf()
-                map.put("followers", followersList)
+                followersList?.let { it1 -> map.put("followers", it1) }
 
                 userRef.update(map).addOnCompleteListener {
                     if (it.isSuccessful) {
@@ -128,14 +128,14 @@ class Profile : Fragment() {
                     }
                 }
             } else {
-                user?.let { it1 -> followersList.add(it1.uid) }
-                followingList_2.add(userUID)
+                user?.let { it1 -> followersList?.add(it1.uid) }
+                followingList_2?.add(userUID)
 
                 val map_2:MutableMap<String, Any> = mutableMapOf()
-                map_2.put("following", followingList_2)
+                followingList_2?.let { it1 -> map_2.put("following", it1) }
 
                 val map:MutableMap<String, Any> = mutableMapOf()
-                map.put("followers", followersList)
+                followersList?.let { it1 -> map.put("followers", it1) }
 
                 userRef.update(map).addOnCompleteListener {
                     if (it.isSuccessful) {
@@ -201,11 +201,11 @@ class Profile : Fragment() {
                     binding.toolbarNameTV.text = name
                     binding.statusTV.text = status
 
-                    followersList = it.get("followers") as MutableList<String>
-                    followingList = it.get("following") as MutableList<String>
+                    followersList = it.get("followers") as? MutableList<String>?
+                    followingList = it.get("following") as? MutableList<String>?
 
-                    binding.followersCountTv.text = "${followersList.size}"
-                    binding.followingCountTv.text = "${followingList.size}"
+                    binding.followersCountTv.text = "${followersList?.size ?: 0}"
+                    binding.followingCountTv.text = "${followingList?.size ?: 0}"
 
                     activity?.let { it1 ->
                         Glide.with(it1.applicationContext)
@@ -237,7 +237,7 @@ class Profile : Fragment() {
                             .into(binding.profileImage)
                     }
                     user?.uid?.let { it2 ->
-                        if (followersList.contains(it2)) {
+                        if (followersList?.contains(it2) == true) {
                             binding.followBtn.text = activity?.resources?.getString(R.string.unfollow)
                             isFollowed = true
                             binding.startChatBtn.visibility = View.VISIBLE

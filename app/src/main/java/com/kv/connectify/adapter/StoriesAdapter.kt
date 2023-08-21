@@ -37,7 +37,7 @@ class StoriesAdapter(val activity: Activity, val list:List<StoriesModel>) : Recy
                 .load(activity.resources?.getDrawable(R.drawable.ic_add))
                 .into(holder.binding.imageView)
             holder.binding.imageView.setOnClickListener {
-                activity.startActivity(Intent())
+                //activity.startActivity(Intent())
             }
         } else {
             Glide.with(activity)

@@ -79,6 +79,7 @@ class MainActivity : AppCompatActivity(), Search.OnDataPass {
             1 -> return R.drawable.ic_search
             2 -> return R.drawable.ic_add
             3 -> return R.drawable.ic_heart_fill
+            4 -> return R.drawable.baseline_person_24
         }
         return R.drawable.ic_home_fill
     }

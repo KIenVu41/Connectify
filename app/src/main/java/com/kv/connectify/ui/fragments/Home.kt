@@ -118,7 +118,7 @@ class Home : Fragment() {
 
         storiesModelList = mutableListOf<StoriesModel>()
         storiesModelList!!.add(StoriesModel("","","","",""))
-        storiesAdapter = StoriesAdapter(requireActivity(), storiesModelList!!)
+        storiesAdapter = StoriesAdapter(activity!!, storiesModelList!!)
         binding.storiesRecyclerView.adapter = storiesAdapter
 
         val auth = FirebaseAuth.getInstance()
