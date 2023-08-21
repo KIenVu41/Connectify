@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.activities.ChatActivity">
+
+    <RelativeLayout
+        android:layout_marginTop="@dimen/dp_12"
+        android:id="@+id/topLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dp_8">
+
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/profileImage"
+            android:layout_width="@dimen/dp_52"
+            android:layout_height="@dimen/dp_52"
+            android:layout_centerVertical="true"
+            android:src="@color/colorGreen"
+            app:civ_border_color="@color/colorGreyLight"
+            app:civ_border_width="@dimen/dp_2" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/dp_10"
+            android:layout_toEndOf="@id/profileImage"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/nameTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Name......"
+                android:textSize="@dimen/sp_18"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/statusTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Online"
+                android:textSize="@dimen/sp_12"
+                android:textColor="@color/colorGreen"
+                android:textStyle="bold" />
+
+
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@id/chatLayout"
+        android:layout_below="@id/topLayout"
+        android:layout_margin="@dimen/dp_8" />
+
+
+    <RelativeLayout
+        android:id="@+id/chatLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:padding="@dimen/dp_6">
+
+        <EditText
+            android:id="@+id/chatET"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/text_box"
+            android:backgroundTint="@color/colorGreyLight"
+            android:hint="@string/start_chat"
+            android:layout_marginEnd="@dimen/dp_4"
+            android:layout_toStartOf="@id/sendBtn"
+            android:padding="@dimen/dp_12"
+            tools:ignore="HardcodedText,UnusedAttribute" />
+
+        <ImageView
+            android:id="@+id/sendBtn"
+            android:layout_width="@dimen/dp_32"
+            android:layout_height="@dimen/dp_32"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/ic_circle"
+            android:backgroundTint="@color/colorGreen"
+            android:padding="@dimen/dp_8"
+            android:src="@drawable/ic_send_white"
+            tools:ignore="UnusedAttribute" />
+
+
+    </RelativeLayout>
+
+</RelativeLayout>

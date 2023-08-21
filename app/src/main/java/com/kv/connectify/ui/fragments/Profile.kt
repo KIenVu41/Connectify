@@ -6,6 +6,7 @@ import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -25,6 +26,7 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.kv.connectify.R
@@ -32,8 +34,10 @@ import com.kv.connectify.databinding.FragmentProfileBinding
 import com.kv.connectify.databinding.HomeItemsBinding
 import com.kv.connectify.databinding.ProfileImageItemsBinding
 import com.kv.connectify.model.PostImageModel
+import com.kv.connectify.ui.activities.ChatActivity
 import com.kv.connectify.ui.activities.MainActivity
 import com.kv.connectify.utils.Constants
+import com.marsad.stylishdialogs.StylishAlertDialog
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
 
@@ -164,8 +168,79 @@ class Profile : Fragment() {
             }
         }
         binding.startChatBtn.setOnClickListener {
-
+            queryChat()
         }
+    }
+
+    private fun queryChat() {
+        val alertDialog = StylishAlertDialog(context, StylishAlertDialog.PROGRESS)
+        alertDialog.titleText = activity?.resources?.getString(R.string.start_chat)
+        alertDialog.cancellable = false
+        alertDialog.show()
+
+        val reference = FirebaseFirestore.getInstance().collection(Constants.MESSAGES)
+        reference.whereArrayContains("uid", userUID)
+            .get().addOnCompleteListener {
+                if (it.isSuccessful) {
+                    val snapshot = it.result
+                    if (snapshot.isEmpty) {
+                        startChat(alertDialog)
+                    } else {
+                        alertDialog.dismissWithAnimation()
+                        for (snapshotChat in snapshot) {
+                            val intent = Intent(activity, ChatActivity::class.java)
+                            intent.putExtra("uid", userUID)
+                            intent.putExtra("id", snapshotChat.id)
+                            startActivity(intent)
+                        }
+                    }
+                } else {
+                    alertDialog.dismissWithAnimation()
+                }
+            }
+    }
+
+    private fun startChat(alertDialog: StylishAlertDialog) {
+        var reference = FirebaseFirestore.getInstance().collection(Constants.MESSAGES)
+        var list:MutableList<String> = mutableListOf()
+        list.add(0, user?.uid ?: "")
+        list.add(1, userUID)
+
+        val pushID = reference.document().id
+        val map:MutableMap<String, Any> = mutableMapOf()
+        map.put("id", pushID)
+        map.put("lastMessage", "Hi")
+        map.put("time", FieldValue.serverTimestamp())
+        map.put("uid", list)
+
+        reference.document(pushID).update(map).addOnCompleteListener {
+            if (!it.isSuccessful) {
+                reference.document(pushID).set(map)
+            }
+        }
+
+        val messageRef = FirebaseFirestore.getInstance()
+            .collection(Constants.MESSAGES)
+            .document(pushID)
+            .collection(Constants.MESSAGES)
+
+        val messageID = messageRef.document().id
+        val messageMap:MutableMap<String, Any> = mutableMapOf()
+
+        messageMap.put("id", messageID)
+        messageMap.put("message", "Hi")
+        messageMap.put("senderID", user?.getUid() ?: "")
+        messageMap.put("time", FieldValue.serverTimestamp())
+
+        messageRef.document(messageID).set(messageMap)
+
+        Handler().postDelayed(Runnable {
+            alertDialog.dismissWithAnimation()
+            val intent = Intent(activity, ChatActivity::class.java)
+            intent.putExtra("uid", userUID)
+            intent.putExtra("id", pushID)
+            startActivity(intent)
+        }, 3000)
     }
 
     private fun init() {

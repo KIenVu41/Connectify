@@ -40,6 +40,7 @@
     <string name="say_hi">Xin chào</string>
     <string name="posts">Bài đăng</string>
     <string name="unfollow">Hủy theo dõi</string>
+    <string name="start_chat">Bắt đầu trò chuyện</string>
     <!-- Add   -->
     <string name="comment_post">Nói gì đó về bài viết này</string>
     <string name="uploaded">Đăng thành công</string>
@@ -51,6 +52,8 @@
     <string name="comment">Nhập bình luận</string>
     <string name="no_comment">Không có bình luận</string>
     <string name="comment_failed">Bình luận không thành công</string>
+    <!-- Chat   -->
+    <string name="smt_went_wrong">Có vấn đề xảy ra</string>
     <!-- reminder    -->
     <string name="exit_click_twice">Nhấn lần nữa để thoát</string>
 

@@ -20,6 +20,12 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.ChatUsersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ui.activities.ChatActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.activities.SplashActivity"
             android:exported="true">
             <intent-filter>

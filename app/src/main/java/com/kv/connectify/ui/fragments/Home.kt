@@ -23,6 +23,7 @@ import com.kv.connectify.databinding.FragmentHomeBinding
 import com.kv.connectify.databinding.HomeItemsBinding
 import com.kv.connectify.model.HomeModel
 import com.kv.connectify.model.StoriesModel
+import com.kv.connectify.ui.activities.ChatUsersActivity
 import com.kv.connectify.utils.Constants
 
 class Home : Fragment() {
@@ -102,8 +103,8 @@ class Home : Fragment() {
 
     private fun clickListener() {
         binding.sendBtn.setOnClickListener {
-           // val intent = Intent(activity, )
-//            startActivity(intent)
+            val intent = Intent(activity, ChatUsersActivity::class.java )
+            startActivity(intent)
         }
     }
 
@@ -118,7 +119,7 @@ class Home : Fragment() {
 
         storiesModelList = mutableListOf<StoriesModel>()
         storiesModelList!!.add(StoriesModel("","","","",""))
-        storiesAdapter = StoriesAdapter(activity!!, storiesModelList!!)
+        storiesAdapter = StoriesAdapter(requireActivity(), storiesModelList!!)
         binding.storiesRecyclerView.adapter = storiesAdapter
 
         val auth = FirebaseAuth.getInstance()
