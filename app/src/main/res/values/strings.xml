@@ -45,7 +45,8 @@
     <string name="uploaded">Đăng thành công</string>
     <string name="upload_failed">Đăng không thành công</string>
     <string name="updated_successful">Cập nhật thành công</string>
-
+    <!-- Search   -->
+    <string name="search">Tìm kiếm...</string>
     <!-- reminder    -->
     <string name="exit_click_twice">Nhấn lần nữa để thoát</string>
 
