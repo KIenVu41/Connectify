@@ -1,60 +1,121 @@
 package com.kv.connectify.ui.fragments
 
 import android.os.Bundle
+import android.provider.SyncStateContract.Constants
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentSnapshot
+import com.google.firebase.firestore.FirebaseFirestore
 import com.kv.connectify.R
+import com.kv.connectify.adapter.CommentAdapter
+import com.kv.connectify.databinding.FragmentCommentBinding
+import com.kv.connectify.model.CommentModel
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [Comment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class Comment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentCommentBinding
+    private var commentAdapter: CommentAdapter? = null
+    private var list: MutableList<CommentModel>? = null
+    private lateinit var user:FirebaseUser
+    private lateinit var reference: CollectionReference
+    private var id = ""
+    private var uid = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_comment, container, false)
+        binding = FragmentCommentBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment Comment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            Comment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        init()
+        reference = FirebaseFirestore.getInstance().collection(com.kv.connectify.utils.Constants.USERS)
+            .document(uid)
+            .collection(com.kv.connectify.utils.Constants.POST_IMAGES)
+            .document(id)
+            .collection(com.kv.connectify.utils.Constants.COMMENTS)
+
+        loadCommentData()
+        clickListener()
+    }
+
+    private fun init() {
+        user = FirebaseAuth.getInstance().currentUser!!
+        binding.commentRecyclerView.layoutManager = LinearLayoutManager(context)
+        list = mutableListOf()
+        commentAdapter = CommentAdapter(requireContext(), list!!)
+        binding.commentRecyclerView.adapter = commentAdapter
+
+        if (arguments == null) {
+            return
+        }
+        id = arguments?.getString("id").toString() ?: ""
+        uid = arguments?.getString("uid").toString() ?: ""
+    }
+
+    private fun loadCommentData() {
+        reference.addSnapshotListener { value, error ->
+            if (error != null) {
+                return@addSnapshotListener
+            }
+            if (value == null) {
+                Toast.makeText(activity, activity?.resources?.getString(R.string.no_comment), Toast.LENGTH_SHORT).show()
+                return@addSnapshotListener
+            }
+            for (snapshot: DocumentSnapshot in value) {
+                val model = snapshot.toObject(CommentModel::class.java)
+                if (model != null) {
+                    list?.add(model)
                 }
             }
+            commentAdapter?.notifyDataSetChanged()
+        }
+    }
+
+    private fun clickListener() {
+        binding.sendBtn.setOnClickListener {
+            val comment = binding.commentET.text.toString()
+            if (comment.isEmpty()) {
+                Toast.makeText(activity, activity?.resources?.getString(R.string.comment), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val commentID = reference.document().id
+
+            val map: MutableMap<String, Any> = mutableMapOf()
+            map["uid"] = user.uid
+            map["comment"] = comment
+            map["commentID"] = commentID
+            map["postID"] = id
+
+            map["name"] = user.displayName ?: ""
+            map["profileImageUrl"] = user.photoUrl.toString()
+
+            reference.document(commentID)
+                .set(map)
+                .addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        binding.commentET.setText("")
+                    } else {
+                        val exception = it.exception
+                        Toast.makeText(activity, activity?.resources?.getString(R.string.comment_failed) + exception?.message, Toast.LENGTH_SHORT).show()
+                    }
+                }
+        }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        binding.sendBtn.setOnClickListener(null)
     }
 }

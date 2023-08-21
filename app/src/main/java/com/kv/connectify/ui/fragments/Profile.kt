@@ -74,6 +74,10 @@ class Profile : Fragment() {
         if (MainActivity.IS_SEARCHED_USER) {
             isMyProfile = false
             userUID = MainActivity.USER_ID
+            loadData()
+        } else {
+            isMyProfile = true
+            userUID = user?.uid ?: ""
         }
 
         if (isMyProfile) {
@@ -168,6 +172,18 @@ class Profile : Fragment() {
         (activity as? AppCompatActivity)?.setSupportActionBar(binding.toolbar)
         val auth = FirebaseAuth.getInstance()
         user = auth.currentUser
+    }
+
+    private fun loadData() {
+        myRef.addSnapshotListener { value, error ->
+            if (error != null) {
+                return@addSnapshotListener
+            }
+            if (value == null || !value.exists()) {
+                return@addSnapshotListener
+            }
+            followingList_2 = value.get("following") as MutableList<String>
+        }
     }
 
     private fun loadBasicData() {

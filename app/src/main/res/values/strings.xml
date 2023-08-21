@@ -47,6 +47,10 @@
     <string name="updated_successful">Cập nhật thành công</string>
     <!-- Search   -->
     <string name="search">Tìm kiếm...</string>
+    <!-- Comment    -->
+    <string name="comment">Nhập bình luận</string>
+    <string name="no_comment">Không có bình luận</string>
+    <string name="comment_failed">Bình luận không thành công</string>
     <!-- reminder    -->
     <string name="exit_click_twice">Nhấn lần nữa để thoát</string>
 

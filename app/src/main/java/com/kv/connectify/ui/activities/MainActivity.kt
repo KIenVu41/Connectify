@@ -15,6 +15,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.kv.connectify.R
 import com.kv.connectify.adapter.ViewPagerAdapter
 import com.kv.connectify.databinding.ActivityMainBinding
+import com.kv.connectify.ui.fragments.Search
 import com.kv.connectify.utils.Constants
 import com.kv.connectify.utils.SharedPrefs
 import java.io.File
@@ -23,7 +24,7 @@ import java.io.FileNotFoundException
 import kotlin.properties.Delegates
 
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), Search.OnDataPass {
 
     internal lateinit var binding: ActivityMainBinding
     private var pagerAdapter: ViewPagerAdapter? = null
@@ -129,5 +130,11 @@ class MainActivity : AppCompatActivity() {
                 .document(it.uid).update(map)
         }
 
+    }
+
+    override fun onChange(uid: String) {
+        USER_ID = uid
+        IS_SEARCHED_USER = true
+        binding.viewPager.currentItem = 4
     }
 }
