@@ -54,6 +54,7 @@
     <string name="comment_failed">Bình luận không thành công</string>
     <!-- Chat   -->
     <string name="smt_went_wrong">Có vấn đề xảy ra</string>
+    <string name="message_title">Tin nhắn</string>
     <!-- reminder    -->
     <string name="exit_click_twice">Nhấn lần nữa để thoát</string>
 
