@@ -2,12 +2,15 @@ package com.kv.connectify.ui.fragments
 
 import android.app.Activity
 import android.content.Intent
+import android.content.res.Configuration
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import com.google.android.gms.auth.api.signin.GoogleSignIn
@@ -28,6 +31,7 @@ import com.kv.connectify.ui.activities.FragmentReplacerActivity
 import com.kv.connectify.ui.activities.MainActivity
 import com.kv.connectify.utils.Constants
 import com.kv.connectify.utils.Utils
+import java.util.Locale
 
 class LoginFragment : Fragment() {
 
@@ -59,6 +63,10 @@ class LoginFragment : Fragment() {
             .build()
 
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
+
+        val adapter:ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(requireActivity(), R.array.language,
+            android.R.layout.simple_spinner_dropdown_item)
+        binding.languageSpinner.adapter = adapter
     }
 
     private fun clickListener() {
@@ -109,6 +117,37 @@ class LoginFragment : Fragment() {
                 (activity as? FragmentReplacerActivity)?.setFragment(CreateAccountFragment())
             }
         })
+        binding.languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(
+                parent: AdapterView<*>,
+                view: View,
+                position: Int,
+                id: Long
+            ) {
+                val selectedLanguage = parent.getItemAtPosition(position)
+                if (selectedLanguage.equals(resources?.getString(R.string.language_english))) {
+                    setLocale("en")
+                } else {
+                    setLocale("vi")
+                }
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {
+
+            }
+        }
+    }
+
+    private fun setLocale(languageCode: String) {
+        val locale = Locale(languageCode)
+        val config = Configuration()
+        config.setLocale(locale)
+        resources?.configuration?.locale = locale
+        resources?.updateConfiguration(config, resources?.displayMetrics)
+
+        val refresh = Intent(activity, MainActivity::class.java)
+        startActivity(refresh)
+        activity?.finish()
     }
 
     private fun sendUserToApp() {

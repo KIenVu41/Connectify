@@ -7,6 +7,15 @@
     tools:context=".ui.fragments.CreateAccountFragment">
 
 
+    <Spinner
+        android:id="@+id/languageSpinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/dp_16"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_gravity="center"/>
+
     <LinearLayout
         android:id="@+id/ll1"
         android:layout_width="match_parent"

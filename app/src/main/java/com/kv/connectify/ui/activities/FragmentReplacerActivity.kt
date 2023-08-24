@@ -28,6 +28,7 @@ class FragmentReplacerActivity : AppCompatActivity() {
 
     fun setFragment(fragment: Fragment) {
         val fragmentTransaction = supportFragmentManager.beginTransaction()
+        fragmentTransaction.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right)
 
         if (fragment is CreateAccountFragment) {
             fragmentTransaction.addToBackStack(null)

@@ -16,6 +16,8 @@ import com.karumi.dexter.listener.multi.MultiplePermissionsListener
 import com.kv.connectify.R
 import com.kv.connectify.databinding.StoriesLayoutBinding
 import com.kv.connectify.model.StoriesModel
+import com.kv.connectify.ui.activities.StoryAddActivity
+import com.kv.connectify.ui.activities.ViewStoryActivity
 
 class StoriesAdapter(val activity: Activity, val list:List<StoriesModel>) : RecyclerView.Adapter<StoriesAdapter.StoriesHolder>() {
 
@@ -37,7 +39,7 @@ class StoriesAdapter(val activity: Activity, val list:List<StoriesModel>) : Recy
                 .load(activity.resources?.getDrawable(R.drawable.ic_add))
                 .into(holder.binding.imageView)
             holder.binding.imageView.setOnClickListener {
-                //activity.startActivity(Intent())
+                activity.startActivity(Intent(activity, StoryAddActivity::class.java))
             }
         } else {
             Glide.with(activity)
@@ -53,7 +55,7 @@ class StoriesAdapter(val activity: Activity, val list:List<StoriesModel>) : Recy
                             override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
                                 p0?.let {
                                     if (it.areAllPermissionsGranted()) {
-                                        activity.startActivity(Intent())
+                                        activity.startActivity(Intent(activity, StoryAddActivity::class.java))
                                     } else {
                                         Toast.makeText(activity, activity.resources?.getString(R.string.allow_per), Toast.LENGTH_SHORT).show();
                                     }
@@ -68,9 +70,9 @@ class StoriesAdapter(val activity: Activity, val list:List<StoriesModel>) : Recy
                             }
                         }).check()
                 } else {
-                    val intent = Intent()
-                    intent.putExtra("", list.get(position).url)
-                    intent.putExtra("", list.get(position).type)
+                    val intent = Intent(activity, ViewStoryActivity::class.java)
+                    intent.putExtra(ViewStoryActivity.VIDEO_URL_KEY, list.get(position).url)
+                    intent.putExtra(ViewStoryActivity.FILE_TYPE, list.get(position).type)
                     activity.startActivity(intent)
                 }
             }

@@ -20,11 +20,31 @@
         android:theme="@style/AppTheme"
         tools:targetApi="31">
         <activity
+            android:name=".ui.activities.PostViewActivity"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="firebasestorage.googleapis.com"
+                    android:scheme="https" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.activities.StoryAddActivity"
+            android:exported="true" />
+        <activity
+            android:name=".ui.activities.ViewStoryActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.activities.ChatUsersActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.activities.ChatActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.activities.SplashActivity"
             android:exported="true">
@@ -36,7 +56,7 @@
         </activity>
         <activity
             android:name=".ui.activities.FragmentReplacerActivity"
-            android:exported="false" />
+            android:exported="true" />
         <activity
             android:name=".ui.activities.MainActivity"
             android:exported="true">

@@ -132,6 +132,7 @@ class Profile : Fragment() {
                     }
                 }
             } else {
+                createNotification()
                 user?.let { it1 -> followersList?.add(it1.uid) }
                 followingList_2?.add(userUID)
 
@@ -357,6 +358,18 @@ class Profile : Fragment() {
                 return super.getItemCount()
             }
         }
+    }
+
+    private fun createNotification() {
+        val reference = FirebaseFirestore.getInstance().collection(Constants.NOTIFICATIONS)
+        val id = reference.document().id
+        val map:MutableMap<String, Any> = mutableMapOf()
+        map.put("time", FieldValue.serverTimestamp())
+        map.put("notification", user?.displayName + activity?.resources?.getString(R.string.follow_noti) ?: " followed you.")
+        map.put("id", id)
+        map.put("uid", userUID)
+
+        reference.document(id).set(map)
     }
 
     private fun removeListener() {
