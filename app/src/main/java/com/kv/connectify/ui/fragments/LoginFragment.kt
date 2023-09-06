@@ -187,7 +187,7 @@ class LoginFragment : Fragment() {
         val list1 = listOf<String>()
         val account = GoogleSignIn.getLastSignedInAccount(requireActivity())
         val map: Map<String, Any?> = hashMapOf("name" to account?.displayName, "email" to account?.email,
-        "profileImage" to account?.photoUrl, "uid" to user.uid, "status" to " ", "followers" to list, "following" to list1)
+        "profileImage" to (account?.photoUrl.toString() ?: " "), "uid" to user.uid, "status" to " ", "followers" to list, "following" to list1)
 
         FirebaseFirestore.getInstance().collection(Constants.COLLECTION_NAME).document(user.uid)
             .set(map)
