@@ -30,13 +30,8 @@ class MainActivity : AppCompatActivity(), Search.OnDataPass {
     private var pagerAdapter: ViewPagerAdapter? = null
     private var doubleBackToExitPressedOnce = false
     private var mHandler = Handler()
-    private val user =FirebaseAuth.getInstance().currentUser
-    private val mRunnable = object : Runnable {
-        override fun run() {
-            doubleBackToExitPressedOnce = false
-
-        }
-    }
+    private val user = FirebaseAuth.getInstance().currentUser
+    private val mRunnable = Runnable { doubleBackToExitPressedOnce = false }
     companion object {
         lateinit var USER_ID: String
         var IS_SEARCHED_USER = false
@@ -96,7 +91,7 @@ class MainActivity : AppCompatActivity(), Search.OnDataPass {
 
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
-            //FirebaseAuth.getInstance().signOut()
+            FirebaseAuth.getInstance().signOut()
             super.onBackPressed()
             return
         }

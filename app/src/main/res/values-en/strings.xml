@@ -9,63 +9,61 @@
     <string name="hint_re_password">Confirm password</string>
     <string name="btn_signup">Signup</string>
     <string name="btn_signin_google">Sign in with Google</string>
-    <string name="back_to_login">Đã có tài khoản, đăng nhập</string>
-    <string name="create_account">Tạo tài khoản</string>
-    <string name="forgot_password">Quên mật khẩu</string>
-    <string name="error">Lỗi: </string>
-    <string name="email_recover">Khôi phục</string>
-    <string name="password_reset_email">Mật khẩu khôi phục email gửi thành công</string>
+    <string name="back_to_login">Go back, Login</string>
+    <string name="create_account">Create Account</string>
+    <string name="forgot_password">Forgot Password</string>
+    <string name="error">Error: </string>
+    <string name="email_recover">Recover</string>
+    <string name="password_reset_email">Password reset email send successfully</string>
     <string-array name="language">
-        <item>English</item>
         <item>Vietnamese</item>
+        <item>English</item>
     </string-array>
     <string name="language_english">English</string>
     <string name="language_vietnamese">Vietnamese</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Validate    -->
-    <string name="invalid_name">Vui lòng nhập tên hợp lệ</string>
-    <string name="invalid_email">Vui lòng nhập email hợp lệ</string>
-    <string name="verify_email">Vui lòng xác nhận email</string>
-    <string name="verify_email_link">Đường dẫn xác thực email đã được gửi</string>
-    <string name="invalid_password">Vui lòng nhập mật khẩu hợp lệ</string>
-    <string name="invalid_password_length">Mật khẩu chứa ít nhất 6 kí tự</string>
-    <string name="password_not_match">Mật khẩu không trùng khớp</string>
+    <string name="invalid_name">Please input valid name</string>
+    <string name="invalid_email">Please input valid email</string>
+    <string name="verify_email">Please verify your email</string>
+    <string name="verify_email_link">Email verification link send</string>
+    <string name="invalid_password">Please input valid password</string>
+    <string name="invalid_password_length">Input 6 digit valid password</string>
+    <string name="password_not_match">Password not match</string>
     <!-- Home    -->
-    <string name="view_all_comments">Xem tất cả bình luận</string>
-    <string name="like">Lượt thích</string>
-    <string name="likes">Lượt thích</string>
-    <string name="share_link">Chia sẻ liên kết ...</string>
-    <string name="allow_per">Vui lòng cấp quyền cho ứng dụng</string>
-    <string name="see_all">Xem tất cả</string>
-    <string name="comments"> bình luận</string>
+    <string name="view_all_comments">View all comment</string>
+    <string name="like">Like</string>
+    <string name="likes">Likes</string>
+    <string name="share_link">Share link using…</string>
+    <string name="allow_per">Please allow permission from settings.</string>
+    <string name="see_all">See all</string>
+    <string name="comments"> comments</string>
     <!-- Profile    -->
-    <string name="followers">Người theo dõi</string>
-    <string name="following">Đang theo dõi</string>
-    <string name="follow">Theo dõi</string>
-    <string name="say_hi">Xin chào</string>
-    <string name="posts">Bài đăng</string>
-    <string name="unfollow">Hủy theo dõi</string>
-    <string name="start_chat">Bắt đầu trò chuyện</string>
-    <string name="follow_noti"> Đã theo dõi bạn.</string>
+    <string name="followers">Followers</string>
+    <string name="following">Following</string>
+    <string name="follow">Follow</string>
+    <string name="say_hi">Chat</string>
+    <string name="posts">Posts</string>
+    <string name="unfollow">UnFollow</string>
+    <string name="start_chat">Starting Chat…</string>
+    <string name="follow_noti"> followed you.</string>
     <!-- Add   -->
-    <string name="comment_post">Nói gì đó về bài viết này</string>
-    <string name="uploaded">Đăng thành công</string>
-    <string name="upload_failed">Đăng không thành công</string>
-    <string name="updated_successful">Cập nhật thành công</string>
+    <string name="comment_post">Add Something About This Post</string>
+    <string name="uploaded">Uploaded</string>
+    <string name="upload_failed">Failed to upload post</string>
+    <string name="updated_successful">Updated Successful</string>
     <!-- Search   -->
-    <string name="search">Tìm kiếm...</string>
+    <string name="search">Search…</string>
     <!-- Comment    -->
-    <string name="comment">Nhập bình luận</string>
-    <string name="no_comment">Không có bình luận</string>
-    <string name="comment_failed">Bình luận không thành công</string>
+    <string name="comment">Enter your comment here</string>
+    <string name="no_comment">No Comments</string>
+    <string name="comment_failed">Failed to comment: </string>
     <!-- Chat   -->
-    <string name="smt_went_wrong">Có vấn đề xảy ra</string>
-    <string name="message_title">Tin nhắn</string>
+    <string name="smt_went_wrong">Something went wrong !</string>
+    <string name="message_title">Messages</string>
     <!-- Story   -->
-    <string name="upload_title">Uploading...</string>
+    <string name="upload_title">Uploading…</string>
     <string name="data_null">Data is null</string>
     <!-- reminder    -->
-    <string name="exit_click_twice">Nhấn lần nữa để thoát</string>
+    <string name="exit_click_twice">Press back again to exit</string>
 
 </resources>

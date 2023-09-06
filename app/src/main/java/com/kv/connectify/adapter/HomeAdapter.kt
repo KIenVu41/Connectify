@@ -1,5 +1,6 @@
 package com.kv.connectify.adapter
 
+import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -53,6 +54,7 @@ class HomeAdapter(var list: MutableList<HomeModel>, val activity: Activity, val 
         return list.size ?: 0
     }
 
+    @SuppressLint("SetTextI18n")
     override fun onBindViewHolder(holder: HomeHolder, position: Int) {
         with(holder) {
             with(list[position]) {
@@ -60,7 +62,7 @@ class HomeAdapter(var list: MutableList<HomeModel>, val activity: Activity, val 
                 binding.nameTv.text= this.name
                 binding.timeTv.text = this.timestamp.toString()
                 val likeList = this.likes
-                val count = likes.size
+                val count = likes?.size ?: 0
 
                 if (count == 0) {
                     binding.likeCountTv.text = "0 " + activity.resources?.getString(R.string.like)
@@ -70,14 +72,14 @@ class HomeAdapter(var list: MutableList<HomeModel>, val activity: Activity, val 
                     binding.likeCountTv.text = "${count} ${activity.resources?.getString(R.string.likes)}"
                 }
                 user?.let {
-                    binding.likeBtn.isChecked = likeList.contains(it.uid)
+                    binding.likeBtn.isChecked = likeList?.contains(it.uid) ?: false
                 }
                 binding.descTv.text = this.description
                 val random = Random()
                 val color = Color.argb(255, random.nextInt(256), random.nextInt(256), random.nextInt(256))
                 Glide.with(activity.applicationContext)
                     .load(this.profileImage)
-                    .placeholder(R.drawable.ic_person)
+                    .placeholder(R.drawable.img_person)
                     .timeout(6500)
                     .into(binding.profileImage)
                 Glide.with(activity.applicationContext)

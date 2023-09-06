@@ -16,13 +16,11 @@
     <string name="email_recover">Khôi phục</string>
     <string name="password_reset_email">Mật khẩu khôi phục email gửi thành công</string>
     <string-array name="language">
-        <item>Tiếng anh</item>
         <item>Tiếng việt</item>
+        <item>Tiếng anh</item>
     </string-array>
     <string name="language_english">Tiếng anh</string>
     <string name="language_vietnamese">Tiếng việt</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <!-- Validate    -->
     <string name="invalid_name">Vui lòng nhập tên hợp lệ</string>
     <string name="invalid_email">Vui lòng nhập email hợp lệ</string>
@@ -43,11 +41,11 @@
     <string name="followers">Người theo dõi</string>
     <string name="following">Đang theo dõi</string>
     <string name="follow">Theo dõi</string>
-    <string name="say_hi">Xin chào</string>
+    <string name="say_hi">Trò chuyện</string>
     <string name="posts">Bài đăng</string>
     <string name="unfollow">Hủy theo dõi</string>
     <string name="start_chat">Bắt đầu trò chuyện</string>
-    <string name="follow_noti"> Đã theo dõi bạn.</string>
+    <string name="follow_noti"> đã theo dõi bạn.</string>
     <!-- Add   -->
     <string name="comment_post">Nói gì đó về bài viết này</string>
     <string name="uploaded">Đăng thành công</string>
@@ -58,12 +56,12 @@
     <!-- Comment    -->
     <string name="comment">Nhập bình luận</string>
     <string name="no_comment">Không có bình luận</string>
-    <string name="comment_failed">Bình luận không thành công</string>
+    <string name="comment_failed">Bình luận không thành công: </string>
     <!-- Chat   -->
     <string name="smt_went_wrong">Có vấn đề xảy ra</string>
     <string name="message_title">Tin nhắn</string>
     <!-- Story   -->
-    <string name="upload_title">Đang tải lên...</string>
+    <string name="upload_title">Đang tải lên…</string>
     <string name="data_null">Không tìm thấy dữ liệu</string>
     <!-- reminder    -->
     <string name="exit_click_twice">Nhấn lần nữa để thoát</string>

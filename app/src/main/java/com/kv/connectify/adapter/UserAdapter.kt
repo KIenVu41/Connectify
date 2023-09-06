@@ -40,7 +40,7 @@ class UserAdapter(val list: List<Users>): RecyclerView.Adapter<UserAdapter.UserH
 
             Glide.with(holder.itemView.context.applicationContext)
                 .load(list.get(position).profileImage)
-                .placeholder(R.drawable.ic_person)
+                .placeholder(R.drawable.img_person)
                 .timeout(6500)
                 .into(holder.binding.profileImage)
 

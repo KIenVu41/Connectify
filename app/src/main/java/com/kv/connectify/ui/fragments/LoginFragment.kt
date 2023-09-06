@@ -1,6 +1,7 @@
 package com.kv.connectify.ui.fragments
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.content.res.Configuration
 import android.os.Bundle
@@ -26,10 +27,12 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kv.connectify.R
+import com.kv.connectify.adapter.LocalizeAdapter
 import com.kv.connectify.databinding.FragmentLoginBinding
 import com.kv.connectify.ui.activities.FragmentReplacerActivity
 import com.kv.connectify.ui.activities.MainActivity
 import com.kv.connectify.utils.Constants
+import com.kv.connectify.utils.LocaleContextWrapper
 import com.kv.connectify.utils.Utils
 import java.util.Locale
 
@@ -39,6 +42,8 @@ class LoginFragment : Fragment() {
     private lateinit var mGoogleSignInClient: GoogleSignInClient
     private lateinit var auth: FirebaseAuth
     private val RC_SIGN_IN = 1
+    private val flags = IntArray(2)
+    private var localeContext: Context? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -56,6 +61,9 @@ class LoginFragment : Fragment() {
     }
 
     private fun init() {
+        flags[0] = R.drawable.vietnam_flag
+        flags[1] = R.drawable.us_flag
+
         auth = FirebaseAuth.getInstance()
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
             .requestIdToken(getString(R.string.default_web_client_id))
@@ -64,9 +72,9 @@ class LoginFragment : Fragment() {
 
         mGoogleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
 
-        val adapter:ArrayAdapter<CharSequence> = ArrayAdapter.createFromResource(requireActivity(), R.array.language,
-            android.R.layout.simple_spinner_dropdown_item)
-        binding.languageSpinner.adapter = adapter
+        val custom = activity?.resources?.getStringArray(R.array.language)
+            ?.let { LocalizeAdapter(requireActivity(), flags , it) }
+        binding.languageSpinner.adapter = custom
     }
 
     private fun clickListener() {
@@ -126,9 +134,9 @@ class LoginFragment : Fragment() {
             ) {
                 val selectedLanguage = parent.getItemAtPosition(position)
                 if (selectedLanguage.equals(resources?.getString(R.string.language_english))) {
-                    //setLocale("en")
+                    setLocale("en")
                 } else {
-                    //setLocale("vi")
+                    setLocale("vi")
                 }
             }
 
@@ -138,16 +146,17 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun setLocale(languageCode: String) {
-        val locale = Locale(languageCode)
-        val config = Configuration()
-        config.setLocale(locale)
-        resources?.configuration?.locale = locale
-        resources?.updateConfiguration(config, resources?.displayMetrics)
+//    private fun setLocale(languageCode: String) {
+//        val locale = Locale(languageCode)
+//        val config = Configuration()
+//        config.setLocale(locale)
+//        resources?.configuration?.locale = locale
+//        resources?.updateConfiguration(config, resources?.displayMetrics)
+//    }
 
-        val refresh = Intent(activity, FragmentReplacerActivity::class.java)
-        startActivity(refresh)
-        activity?.finish()
+    private fun setLocale(languageCode: String) {
+        localeContext = LocaleContextWrapper.wrap(requireContext(), languageCode)
+        resources.updateConfiguration(resources.configuration, resources.displayMetrics)
     }
 
     private fun sendUserToApp() {
