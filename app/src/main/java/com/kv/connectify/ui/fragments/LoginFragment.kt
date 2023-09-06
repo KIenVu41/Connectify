@@ -126,9 +126,9 @@ class LoginFragment : Fragment() {
             ) {
                 val selectedLanguage = parent.getItemAtPosition(position)
                 if (selectedLanguage.equals(resources?.getString(R.string.language_english))) {
-                    setLocale("en")
+                    //setLocale("en")
                 } else {
-                    setLocale("vi")
+                    //setLocale("vi")
                 }
             }
 
@@ -145,7 +145,7 @@ class LoginFragment : Fragment() {
         resources?.configuration?.locale = locale
         resources?.updateConfiguration(config, resources?.displayMetrics)
 
-        val refresh = Intent(activity, MainActivity::class.java)
+        val refresh = Intent(activity, FragmentReplacerActivity::class.java)
         startActivity(refresh)
         activity?.finish()
     }

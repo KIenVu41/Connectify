@@ -286,7 +286,7 @@ class Profile : Fragment() {
                     activity?.let { it1 ->
                         Glide.with(it1.applicationContext)
                             .load(profileURL)
-                            .placeholder(R.drawable.ic_person)
+                            .placeholder(R.drawable.img_person)
                             .circleCrop()
                             .listener(object : RequestListener<Drawable> {
                                 override fun onLoadFailed(
