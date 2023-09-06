@@ -33,6 +33,9 @@ import com.kv.connectify.ui.activities.FragmentReplacerActivity
 import com.kv.connectify.ui.activities.MainActivity
 import com.kv.connectify.utils.Constants
 import com.kv.connectify.utils.LocaleContextWrapper
+import com.kv.connectify.utils.SharedPrefs
+import com.kv.connectify.utils.SharedPrefs.get
+import com.kv.connectify.utils.SharedPrefs.set
 import com.kv.connectify.utils.Utils
 import java.util.Locale
 
@@ -135,8 +138,12 @@ class LoginFragment : Fragment() {
                 val selectedLanguage = parent.getItemAtPosition(position)
                 if (selectedLanguage.equals(resources?.getString(R.string.language_english))) {
                     setLocale("en")
+                    SharedPrefs.customPrefs(activity!!)[Constants.LOCALIZE_KEY] = 1;
+                    handleLocaleChange()
                 } else {
                     setLocale("vi")
+                    SharedPrefs.customPrefs(activity!!)[Constants.LOCALIZE_KEY] = 0;
+                    handleLocaleChange()
                 }
             }
 
@@ -144,19 +151,23 @@ class LoginFragment : Fragment() {
 
             }
         }
+        binding.languageSpinner.setSelection(SharedPrefs.customPrefs(requireActivity())["localize", 0])
     }
-
-//    private fun setLocale(languageCode: String) {
-//        val locale = Locale(languageCode)
-//        val config = Configuration()
-//        config.setLocale(locale)
-//        resources?.configuration?.locale = locale
-//        resources?.updateConfiguration(config, resources?.displayMetrics)
-//    }
 
     private fun setLocale(languageCode: String) {
         localeContext = LocaleContextWrapper.wrap(requireContext(), languageCode)
         resources.updateConfiguration(resources.configuration, resources.displayMetrics)
+    }
+
+    private fun handleLocaleChange() {
+        activity?.let {
+            binding.tvTitle.text = it.resources?.getString(R.string.login_title)
+            binding.loginBtn.text = it.resources?.getString(R.string.login_title)
+            binding.passwordET.hint = it.resources?.getString(R.string.hint_password)
+            binding.forgotTV.text = it.resources?.getString(R.string.forgot_password)
+            binding.googleSignInBtn.text = it.resources?.getString(R.string.btn_signin_google)
+            binding.signUpTV.text = it.resources?.getString(R.string.create_account)
+        }
     }
 
     private fun sendUserToApp() {

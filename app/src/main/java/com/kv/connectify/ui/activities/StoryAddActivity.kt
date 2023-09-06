@@ -90,9 +90,11 @@ class StoryAddActivity : AppCompatActivity() {
         storageReference.putFile(Uri.fromFile(file)).addOnCompleteListener {
             if (it.isSuccessful) {
                 it.result?.let { it1 -> {
-                  it1.storage.downloadUrl.addOnSuccessListener { it2 -> {
-                      uploadVideoDataToFirestore(it2.toString(), type)
-                  } }
+                  it1.storage.downloadUrl.addOnSuccessListener { it2 ->
+                      run {
+                          uploadVideoDataToFirestore(it2.toString(), type)
+                      }
+                  }
                 } }
             } else {
                 alertDialog.dismissWithAnimation()
@@ -108,11 +110,11 @@ class StoryAddActivity : AppCompatActivity() {
 
     private fun uploadImageToStorage(fileName: String, uri: Uri, type: String) {
         val storageReference = FirebaseStorage.getInstance().reference.child("Stories/" + fileName)
-        val addOnCompleteListener = storageReference.putFile(uri).addOnCompleteListener {
+        storageReference.putFile(uri).addOnCompleteListener {
             if (it.isSuccessful) {
                 it.result?.let {
                     it.storage.downloadUrl.addOnSuccessListener { it1 ->
-                        {
+                        run {
                             uploadVideoDataToFirestore(it1.toString(), type)
                         }
                     }

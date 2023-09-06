@@ -49,7 +49,7 @@ class ChatUsersActivity : AppCompatActivity() {
                     return@addSnapshotListener
                 if (value == null)
                     return@addSnapshotListener
-                if (value.isEmpty())
+                if (value.isEmpty)
                     return@addSnapshotListener
 
                 list?.clear()
@@ -66,7 +66,7 @@ class ChatUsersActivity : AppCompatActivity() {
     private fun clickListener() {
         adapter?.OnStartChat(object : ChatUserAdapter.OnStartChat {
             override fun clicked(position: Int, uids: MutableList<String>, chatID: String) {
-                var oppositeUID: String
+                val oppositeUID: String
                 if (!uids.get(0).equals(user.uid)) {
                     oppositeUID = uids.get(0)
                 } else {

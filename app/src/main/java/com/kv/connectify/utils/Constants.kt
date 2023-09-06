@@ -16,4 +16,5 @@ object Constants {
     val PREF_STORED = "connectify_store"
     val PREF_URL = "connectify_url"
     val PREF_DIRECTORY = "connectify_direct"
+    val LOCALIZE_KEY = "localize"
 }

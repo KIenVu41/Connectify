@@ -5,9 +5,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:layout_width="@dimen/dp_52"
-        android:layout_height="@dimen/dp_52"
+        android:layout_width="@dimen/dp_42"
+        android:layout_height="@dimen/dp_42"
         app:civ_border_color="@android:color/darker_gray"
+        android:layout_marginStart="@dimen/dp_5"
+        android:layout_marginTop="@dimen/dp_5"
         app:civ_border_width="@dimen/dp_2"
         android:id="@+id/imageView" />
 
