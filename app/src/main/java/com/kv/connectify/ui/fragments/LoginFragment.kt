@@ -203,24 +203,39 @@ class LoginFragment : Fragment() {
     }
 
     private fun updateUI(user: FirebaseUser) {
-        val list = listOf<String>()
-        val list1 = listOf<String>()
+        val fireStore = FirebaseFirestore.getInstance()
+        val userRef = fireStore.collection(Constants.COLLECTION_NAME).document(user.uid)
+        val list: MutableList<String> = mutableListOf()
+        val list1: MutableList<String> = mutableListOf()
         val account = GoogleSignIn.getLastSignedInAccount(requireActivity())
-        val map: Map<String, Any?> = hashMapOf("name" to account?.displayName, "email" to account?.email,
-        "profileImage" to (account?.photoUrl.toString() ?: " "), "uid" to user.uid, "status" to " ", "followers" to list, "following" to list1)
 
-        FirebaseFirestore.getInstance().collection(Constants.COLLECTION_NAME).document(user.uid)
-            .set(map)
-            .addOnCompleteListener(OnCompleteListener {
-                if (it.isSuccessful) {
-                    binding.progressBar.visibility = View.GONE
-                    sendUserToApp();
-                } else {
-                    binding.progressBar.visibility = View.GONE
-                    Toast.makeText(activity, activity?.resources?.getString(R.string.error) + it.exception?.message,
-                        Toast.LENGTH_SHORT).show();
+        userRef.get().addOnSuccessListener { ds ->
+            if (ds.exists()) {
+                val data = ds.data
+                val curFollowers = data?.get("followers") as? MutableList<String>
+                val curFollowing = data?.get("following") as? MutableList<String>
+
+                if (curFollowers != null && curFollowers.size > 0) {
+                    list.addAll(curFollowers)
                 }
-            })
+                if (curFollowing != null && curFollowing.size > 0) {
+                    list1.addAll(curFollowing)
+                }
+                val map: Map<String, Any?> = hashMapOf("name" to account?.displayName, "email" to account?.email,
+                    "profileImage" to (account?.photoUrl.toString() ?: " "), "uid" to user.uid, "status" to " ", "followers" to list, "following" to list1)
+
+                userRef.set(map).addOnCompleteListener(OnCompleteListener {
+                    if (it.isSuccessful) {
+                        binding.progressBar.visibility = View.GONE
+                        sendUserToApp();
+                    } else {
+                        binding.progressBar.visibility = View.GONE
+                        Toast.makeText(activity, activity?.resources?.getString(R.string.error) + it.exception?.message,
+                            Toast.LENGTH_SHORT).show();
+                    }
+                })
+            }
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

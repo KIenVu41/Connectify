@@ -2,6 +2,7 @@ package com.kv.connectify.ui.fragments
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,6 +14,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.firestore.CollectionReference
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.ktx.toObject
@@ -129,46 +132,83 @@ class Home : Fragment() {
     }
 
     private fun loadDataFromFirestore() {
-        val reference = FirebaseFirestore.getInstance().collection(Constants.COLLECTION_NAME)
+        if (!::user.isInitialized) {
+            return
+        }
+        val reference: DocumentReference = FirebaseFirestore.getInstance().collection(Constants.COLLECTION_NAME)
             .document(user.uid)
-        val collectionReference = FirebaseFirestore.getInstance().collection(Constants.COLLECTION_NAME)
-        reference.addSnapshotListener { value, error ->
-            error?.let {
-                return@addSnapshotListener
-            }
-            if (value == null) {
-                return@addSnapshotListener
-            }
-            val uidList = value.get("following") as? List<String>
-            if (uidList == null || uidList.isEmpty()) {
-                return@addSnapshotListener
-            }
-             collectionReference.whereIn("uid", uidList)
-                .addSnapshotListener snap1@ { value1, error1 ->
-                    if (value1 == null) {
-                        return@snap1
-                    }
-                    list?.clear()
-                    for (snapshot1: QueryDocumentSnapshot in value1) {
-                        if (!snapshot1.exists()) {
-                            return@snap1
-                        }
-                        val model = snapshot1.toObject<HomeModel>(HomeModel::class.java)
-                        list?.add(HomeModel(model.name, model.profileImage, model.imageUrl,
-                        model.uid, model.description, model.id, model.timestamp, model.likes))
-                        snapshot1.reference.collection("Comments").get()
-                            .addOnCompleteListener {
-                                if (it.isSuccessful) {
-                                    var map:MutableMap<String, Any> = mutableMapOf<String, Any>()
-                                    for (commentSnapshot in it.result) {
-                                        map = commentSnapshot.data
-                                    }
 
-                                    commentCount.value = map.size
+        val collectionReference: CollectionReference = FirebaseFirestore.getInstance().collection(Constants.COLLECTION_NAME)
+
+        reference.addSnapshotListener { value, error ->
+            if (error != null) {
+                Log.d("Error: ", error.message ?: "")
+                return@addSnapshotListener
+            }
+
+            if (value == null)
+                return@addSnapshotListener
+
+            val uidList = value.get("following") as? List<String>
+
+            if (uidList == null || uidList.isEmpty())
+                return@addSnapshotListener
+
+            collectionReference.whereIn("uid", uidList)
+                .addSnapshotListener { value1, error1 ->
+                    if (error1 != null) {
+                        Log.d("Error: ", error1.message ?: "")
+                    }
+
+                    if (value1 == null)
+                        return@addSnapshotListener
+
+                    for (snapshot in value1) {
+                        snapshot.getReference().collection(Constants.POST_IMAGES)
+                            .addSnapshotListener { value11, error11 ->
+                                if (error11 != null) {
+                                    Log.d("Error: ", error11.message ?: "")
                                 }
+
+                                if (value11 == null)
+                                    return@addSnapshotListener
+
+                                list?.clear()
+
+                                for (snapshot1 in value11) {
+                                    if (!snapshot1.exists())
+                                        return@addSnapshotListener
+
+                                    val model = snapshot1.toObject(HomeModel::class.java)
+
+                                    list?.add(
+                                        HomeModel(
+                                            model.name,
+                                            model.profileImage,
+                                            model.imageUrl,
+                                            model.uid,
+                                            model.description,
+                                            model.id,
+                                            model.timestamp,
+                                            model.likes
+                                        )
+                                    )
+
+                                    snapshot1.getReference().collection(Constants.COMMENTS).get()
+                                        .addOnCompleteListener { task ->
+                                            if (task.isSuccessful) {
+                                                var map:MutableMap<String, Any> = mutableMapOf<String, Any>()
+                                                for (commentSnapshot in task.result) {
+                                                    map = commentSnapshot.data
+                                                }
+
+                                                commentCount.value = map.size
+                                            }
+                                        }
+                                }
+                                adapter?.notifyDataSetChanged()
                             }
                     }
-                    adapter?.notifyDataSetChanged()
                 }
             loadStories(uidList)
         }

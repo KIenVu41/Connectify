@@ -32,9 +32,11 @@ class HomeAdapter(var list: MutableList<HomeModel>, val activity: Activity, val 
                 activity.startActivity(intent)
             })
 
-            binding.likeBtn.setOnCheckedChangeListener { buttonView, isChecked -> {
-                onPressed.onLiked(position, id, uid, likes, isChecked)
-            } }
+            binding.likeBtn.setOnCheckedChangeListener { buttonView, isChecked ->
+                run {
+                    onPressed.onLiked(position, id, uid, likes, isChecked)
+                }
+            }
 
             binding.shareBtn.setOnClickListener(View.OnClickListener {
                 val intent = Intent(Intent.ACTION_SEND)
