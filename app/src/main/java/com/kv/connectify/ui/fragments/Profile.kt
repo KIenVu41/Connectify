@@ -372,7 +372,7 @@ class Profile : Fragment() {
         val id = reference.document().id
         val map:MutableMap<String, Any> = mutableMapOf()
         map.put("time", FieldValue.serverTimestamp())
-        map.put("notification", user?.displayName + activity?.resources?.getString(R.string.follow_noti) ?: " followed you.")
+        map.put("notification", user?.displayName + " " + activity?.resources?.getString(R.string.follow_noti))
         map.put("id", id)
         map.put("uid", userUID)
 
