@@ -1,5 +1,6 @@
 package com.kv.connectify.ui.fragments
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.MutableLiveData
@@ -19,6 +21,8 @@ import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QueryDocumentSnapshot
 import com.google.firebase.firestore.ktx.toObject
+import com.journeyapps.barcodescanner.ScanContract
+import com.journeyapps.barcodescanner.ScanOptions
 import com.kv.connectify.R
 import com.kv.connectify.adapter.HomeAdapter
 import com.kv.connectify.adapter.StoriesAdapter
@@ -38,6 +42,17 @@ class Home : Fragment() {
     private var list: MutableList<HomeModel>? = null
     private var storiesModelList: MutableList<StoriesModel>? = null
     private lateinit var user: FirebaseUser
+    lateinit var onDataPass: Search.OnDataPass
+    private val barcodeLauncer = registerForActivityResult(ScanContract()) {
+        if (it.contents != null && it.contents != user.uid) {
+            onDataPass.onChange(it.contents)
+        }
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        onDataPass = context as Search.OnDataPass
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -108,6 +123,17 @@ class Home : Fragment() {
         binding.sendBtn.setOnClickListener {
             val intent = Intent(activity, ChatUsersActivity::class.java )
             startActivity(intent)
+        }
+        binding.qrScanBtn.setOnClickListener {
+            val options = ScanOptions()
+            options.setDesiredBarcodeFormats(ScanOptions.QR_CODE)
+            options.setPrompt("Scan a barcode")
+            options.setCameraId(0)
+            options.setBeepEnabled(false)
+            options.setBarcodeImageEnabled(true)
+            options.setOrientationLocked(true);
+            options.setTimeout(60000)
+            barcodeLauncer.launch(options)
         }
     }
 
@@ -231,6 +257,7 @@ class Home : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        binding.qrScanBtn.setOnClickListener(null)
         binding.sendBtn.setOnClickListener(null)
     }
 }

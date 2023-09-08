@@ -70,5 +70,6 @@
     <string name="qr_code">Mã QR</string>
     <string name="dark_mode">Dark mode</string>
     <string name="logout">Logout</string>
+    <string name="dialog_qr">Your QR Code</string>
 
 </resources>

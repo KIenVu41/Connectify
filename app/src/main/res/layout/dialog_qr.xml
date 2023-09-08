@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/tv_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/dialog_qr"
+        android:textAlignment="center"
+        android:textSize="@dimen/sp_24"
+        android:textStyle="bold"
+        android:layout_margin="@dimen/dp_16"
+        android:padding="@dimen/dp_10"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline" />
+
+    <ImageView
+        android:id="@+id/idIVQrcode"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/tv_title"
+        android:contentDescription="@string/qr_code" />
+</RelativeLayout>

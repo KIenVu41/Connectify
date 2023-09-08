@@ -94,6 +94,7 @@ class Profile : Fragment() {
         } else {
             binding.editProfileImage.visibility = View.GONE
             binding.followBtn.visibility = View.VISIBLE
+            binding.settingBtn.visibility = View.GONE
         }
         userRef = FirebaseFirestore.getInstance().collection(Constants.COLLECTION_NAME).document(userUID)
 

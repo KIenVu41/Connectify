@@ -70,5 +70,6 @@
     <string name="qr_code">QR Code</string>
     <string name="dark_mode">Dark mode</string>
     <string name="logout">Đăng xuất</string>
+    <string name="dialog_qr">Mã QR của bạn</string>
 
 </resources>
