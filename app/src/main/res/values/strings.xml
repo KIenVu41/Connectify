@@ -65,5 +65,10 @@
     <string name="data_null">Không tìm thấy dữ liệu</string>
     <!-- reminder    -->
     <string name="exit_click_twice">Nhấn lần nữa để thoát</string>
+    <!-- Setting   -->
+    <string name="settings">Cài đặt</string>
+    <string name="qr_code">QR Code</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="logout">Đăng xuất</string>
 
 </resources>

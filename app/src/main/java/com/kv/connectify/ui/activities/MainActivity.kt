@@ -91,7 +91,6 @@ class MainActivity : AppCompatActivity(), Search.OnDataPass {
 
     override fun onBackPressed() {
         if (doubleBackToExitPressedOnce) {
-            FirebaseAuth.getInstance().signOut()
             super.onBackPressed()
             return
         }

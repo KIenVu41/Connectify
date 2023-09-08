@@ -65,5 +65,10 @@
     <string name="data_null">Data is null</string>
     <!-- reminder    -->
     <string name="exit_click_twice">Press back again to exit</string>
+    <!-- Setting   -->
+    <string name="settings">Cài đặt</string>
+    <string name="qr_code">Mã QR</string>
+    <string name="dark_mode">Dark mode</string>
+    <string name="logout">Logout</string>
 
 </resources>

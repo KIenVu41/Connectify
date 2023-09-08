@@ -1,5 +1,6 @@
 package com.kv.connectify.ui.fragments
 
+import android.app.Activity.ACTIVITY_SERVICE
 import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.graphics.drawable.BitmapDrawable
@@ -36,6 +37,7 @@ import com.kv.connectify.databinding.ProfileImageItemsBinding
 import com.kv.connectify.model.PostImageModel
 import com.kv.connectify.ui.activities.ChatActivity
 import com.kv.connectify.ui.activities.MainActivity
+import com.kv.connectify.ui.activities.SettingActivity
 import com.kv.connectify.utils.Constants
 import com.marsad.stylishdialogs.StylishAlertDialog
 import com.theartofdev.edmodo.cropper.CropImage
@@ -170,6 +172,10 @@ class Profile : Fragment() {
         }
         binding.startChatBtn.setOnClickListener {
             queryChat()
+        }
+        binding.settingBtn.setOnClickListener {
+            val intent = Intent(activity, SettingActivity::class.java)
+            startActivity(intent)
         }
     }
 
@@ -376,6 +382,7 @@ class Profile : Fragment() {
         binding.followBtn.setOnClickListener(null)
         binding.editProfileImage.setOnClickListener(null)
         binding.startChatBtn.setOnClickListener(null)
+        binding.settingBtn.setOnClickListener(null)
     }
 
     override fun onStart() {

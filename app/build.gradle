@@ -63,4 +63,5 @@ dependencies {
     implementation 'com.karumi:dexter:6.2.2'
     implementation 'com.google.android.exoplayer:exoplayer:2.17.1'
     implementation 'com.github.a914-gowtham:android-video-trimmer:1.7.0'
+    implementation 'androidmads.library.qrgenearator:QRGenearator:1.0.3'
 }

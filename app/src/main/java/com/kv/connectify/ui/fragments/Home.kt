@@ -216,7 +216,7 @@ class Home : Fragment() {
 
     private fun loadStories(followingList: List<String>) {
         val query = FirebaseFirestore.getInstance().collection(Constants.STORIES)
-        query.whereIn("udi", followingList).addSnapshotListener { value, error ->
+        query.whereIn("udi", followingList).addSnapshotListener { value, _ ->
             value?.let {
                 for (snapshot: QueryDocumentSnapshot in it) {
                     if (!it.isEmpty) {

@@ -31,7 +31,7 @@
                 android:textStyle="bold" />
 
             <ImageButton
-                android:id="@+id/sendBtn"
+                android:id="@+id/settingBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
@@ -41,7 +41,7 @@
                 android:layout_marginTop="@dimen/dp_12"
                 android:layout_marginEnd="@dimen/dp_12"
                 android:layout_marginBottom="@dimen/dp_12"
-                android:background="@drawable/ic_menu"
+                android:background="@drawable/baseline_settings_24"
                 android:contentDescription="@null" />
 
         </RelativeLayout>
