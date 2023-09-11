@@ -23,7 +23,7 @@
         android:hardwareAccelerated="true">
         <activity
             android:name=".ui.activities.SettingActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".ui.activities.PostViewActivity"
             android:exported="true">

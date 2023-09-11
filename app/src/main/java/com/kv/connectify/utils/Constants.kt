@@ -17,4 +17,5 @@ object Constants {
     val PREF_URL = "connectify_url"
     val PREF_DIRECTORY = "connectify_direct"
     val LOCALIZE_KEY = "localize"
+    val DARKMODE_KEY = "darkmode_"
 }

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.LayoutInflater
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatDelegate
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
@@ -38,6 +39,11 @@ class MainActivity : AppCompatActivity(), Search.OnDataPass {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            setTheme(R.style.darkTheme)
+        } else {
+            setTheme(R.style.AppTheme)
+        }
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)

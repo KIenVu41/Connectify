@@ -1,11 +1,13 @@
 package com.kv.connectify.ui.activities
 
+import android.app.UiModeManager
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.Window
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatDelegate
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
 import com.google.zxing.BarcodeFormat
@@ -13,6 +15,9 @@ import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.kv.connectify.R
 import com.kv.connectify.databinding.ActivitySettingBinding
 import com.kv.connectify.databinding.DialogQrBinding
+import com.kv.connectify.utils.Constants
+import com.kv.connectify.utils.SharedPrefs
+import com.kv.connectify.utils.SharedPrefs.set
 import java.lang.Exception
 
 class SettingActivity : AppCompatActivity() {
@@ -20,11 +25,20 @@ class SettingActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySettingBinding
     private lateinit var auth: FirebaseAuth
     override fun onCreate(savedInstanceState: Bundle?) {
+        auth = FirebaseAuth.getInstance()
+        val isDarkMode = SharedPrefs.customPrefs(this).getBoolean(Constants.DARKMODE_KEY + auth.currentUser?.uid, false)
+        if (isDarkMode) {
+            setTheme(R.style.darkTheme)
+        } else {
+            setTheme(R.style.AppTheme)
+        }
         super.onCreate(savedInstanceState)
         binding = ActivitySettingBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        auth = FirebaseAuth.getInstance()
+        if (isDarkMode) {
+            binding.switchDarkmode.isChecked = true
+        }
         setListener()
     }
 
@@ -32,8 +46,15 @@ class SettingActivity : AppCompatActivity() {
         binding.exitBtn.setOnClickListener {
             FirebaseAuth.getInstance().signOut()
         }
-        binding.switchDarkmode.setOnCheckedChangeListener { buttonView, isChecked ->
-
+        binding.switchDarkmode.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                SharedPrefs.customPrefs(this)[Constants.DARKMODE_KEY + auth.currentUser?.uid] = true
+                recreate()
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                SharedPrefs.customPrefs(this)[Constants.DARKMODE_KEY + auth.currentUser?.uid] = false
+            }
         }
         binding.ivBack.setOnClickListener {
             super.onBackPressed()

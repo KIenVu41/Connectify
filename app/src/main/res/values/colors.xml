@@ -18,4 +18,6 @@
     <color name="colorGreyDark">#7B7B7B</color>
     <color name="colorLightBlue">#FAFAFC</color>
     <color name="border_round_image">#434343</color>
+    <color name="darkPrimary">#212121</color>
+    <color name="darkPrimaryDark">#000000</color>
 </resources>

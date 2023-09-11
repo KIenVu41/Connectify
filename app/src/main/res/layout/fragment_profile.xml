@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="?attr/background_color"
     tools:context=".ui.fragments.Profile">
 
     <androidx.appcompat.widget.Toolbar
@@ -10,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true"
-        android:background="@android:color/white"
+        android:background="?attr/background_color"
         android:elevation="@dimen/dp_2"
         app:contentInsetEnd="@dimen/dp_0"
         app:contentInsetStart="@dimen/dp_0">
@@ -26,11 +27,11 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="username"
-                android:textColor="@android:color/black"
+                android:textColor="?attr/text_color"
                 android:textSize="@dimen/sp_18"
                 android:textStyle="bold" />
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/settingBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -67,7 +68,6 @@
                 android:layout_marginTop="@dimen/dp_14"
                 android:layout_marginEnd="@dimen/dp_14"
                 android:layout_marginBottom="@dimen/dp_14"
-                android:src="@drawable/img_person"
                 app:civ_border_color="#76D1FA"
                 app:civ_border_width="@dimen/dp_1" />
 
@@ -81,7 +81,7 @@
                 android:background="@drawable/ic_circle"
                 android:elevation="@dimen/dp_3"
                 android:src="@drawable/ic_edit"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
         </RelativeLayout>
 
@@ -99,7 +99,7 @@
                 android:maxLines="1"
                 android:padding="@dimen/dp_4"
                 android:text="Username"
-                android:textColor="@android:color/black"
+                android:textColor="?attr/text_color"
                 android:textSize="@dimen/sp_18"
                 android:textStyle="bold" />
 
@@ -110,7 +110,7 @@
                 android:maxLines="3"
                 android:padding="@dimen/dp_4"
                 android:text="Love to travel around the world"
-                android:textColor="@android:color/black"
+                android:textColor="?attr/text_color"
                 android:textStyle="bold" />
 
 
@@ -144,7 +144,7 @@
                     android:gravity="center_horizontal"
                     android:text="0"
                     android:textAlignment="center"
-                    android:textColor="@android:color/black"
+                    android:textColor="?attr/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -153,7 +153,7 @@
                     android:gravity="center_horizontal"
                     android:text="@string/following"
                     android:textAlignment="center"
-                    android:textColor="@android:color/black"
+                    android:textColor="?attr/text_color"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -171,7 +171,7 @@
                     android:gravity="center_horizontal"
                     android:text="0"
                     android:textAlignment="center"
-                    android:textColor="@android:color/black"
+                    android:textColor="?attr/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -180,7 +180,7 @@
                     android:gravity="center_horizontal"
                     android:text="@string/followers"
                     android:textAlignment="center"
-                    android:textColor="@android:color/black"
+                    android:textColor="?attr/text_color"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -198,7 +198,7 @@
                     android:gravity="center_horizontal"
                     android:text="0"
                     android:textAlignment="center"
-                    android:textColor="@android:color/black"
+                    android:textColor="?attr/text_color"
                     android:textStyle="bold" />
 
                 <TextView
@@ -207,7 +207,7 @@
                     android:gravity="center_horizontal"
                     android:text="@string/posts"
                     android:textAlignment="center"
-                    android:textColor="@android:color/black"
+                    android:textColor="?attr/text_color"
                     android:textStyle="bold" />
 
             </LinearLayout>
@@ -233,7 +233,7 @@
                 android:background="@drawable/btn_bg"
                 android:minWidth="@dimen/dp_160"
                 android:text="@string/say_hi"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 android:visibility="visible" />
 
             <Button
@@ -244,7 +244,7 @@
                 android:background="@drawable/btn_bg"
                 android:minWidth="@dimen/dp_160"
                 android:text="@string/follow"
-                android:textColor="@android:color/white"
+                android:textColor="@color/white"
                 android:visibility="visible" />
 
         </LinearLayout>

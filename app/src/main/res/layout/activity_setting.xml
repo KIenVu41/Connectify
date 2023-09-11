@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="?attr/background_color"
     tools:context=".ui.activities.SettingActivity">
 
     <androidx.appcompat.widget.Toolbar
@@ -11,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true"
-        android:background="@android:color/white"
+        android:background="?attr/background_color"
         android:elevation="@dimen/dp_2"
         app:contentInsetEnd="@dimen/dp_0"
         app:contentInsetStart="@dimen/dp_0">
@@ -36,7 +37,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="@string/settings"
-                android:textColor="@android:color/black"
+                android:textColor="?attr/text_color"
                 android:textSize="@dimen/sp_18"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -63,7 +64,7 @@
             android:text="@string/qr_code"
             android:textStyle="bold"
             android:textSize="@dimen/sp_18"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_color"
             android:layout_toEndOf="@+id/iv_qr"
             android:layout_marginStart="@dimen/dp_24"/>
     </RelativeLayout>
@@ -95,7 +96,7 @@
             android:text="@string/dark_mode"
             android:textStyle="bold"
             android:textSize="@dimen/sp_18"
-            android:textColor="@color/black"
+            android:textColor="?attr/text_color"
             android:layout_toEndOf="@+id/iv_darkmode"
             android:layout_marginStart="@dimen/dp_24"
             android:layout_centerVertical="true"/>
