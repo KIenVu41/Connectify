@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentTop="true"
-        android:background="@android:color/white"
+        android:background="?attr/background_color"
         android:elevation="@dimen/dp_2"
         app:contentInsetEnd="@dimen/dp_0"
         app:contentInsetStart="@dimen/dp_0">
@@ -39,7 +39,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerVertical="true"
                 android:text="@string/app_name"
-                android:textColor="@android:color/black"
+                android:textColor="?attr/text_color"
                 android:textSize="@dimen/sp_18"
                 android:textStyle="bold" />
 

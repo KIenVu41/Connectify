@@ -39,7 +39,8 @@ class MainActivity : AppCompatActivity(), Search.OnDataPass {
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+        val isDarkMode = SharedPrefs.customPrefs(this).getBoolean(Constants.DARKMODE_KEY + user?.uid, false)
+        if (isDarkMode) {
             setTheme(R.style.darkTheme)
         } else {
             setTheme(R.style.AppTheme)
