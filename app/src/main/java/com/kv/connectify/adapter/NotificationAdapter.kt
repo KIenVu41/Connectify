@@ -28,7 +28,7 @@ class NotificationAdapter(val context: Context, val list: MutableList<Notificati
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onBindViewHolder(holder: NotificationHolder, position: Int) {
         with(holder) {
-           this.binding.notification.text = list.get(position).notification
+            this.binding.notification.text = list[position].notification
             this.binding.timeTv.text = calculateTime(list[position].time)
         }
     }

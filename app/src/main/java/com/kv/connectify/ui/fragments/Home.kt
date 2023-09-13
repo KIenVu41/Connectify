@@ -190,7 +190,7 @@ class Home : Fragment() {
                         return@addSnapshotListener
 
                     for (snapshot in value1) {
-                        snapshot.getReference().collection(Constants.POST_IMAGES)
+                        snapshot.reference.collection(Constants.POST_IMAGES)
                             .addSnapshotListener { value11, error11 ->
                                 if (error11 != null) {
                                     Log.d("Error: ", error11.message ?: "")
@@ -220,7 +220,7 @@ class Home : Fragment() {
                                         )
                                     )
 
-                                    snapshot1.getReference().collection(Constants.COMMENTS).get()
+                                    snapshot1.reference.collection(Constants.COMMENTS).get()
                                         .addOnCompleteListener { task ->
                                             if (task.isSuccessful) {
                                                 var map:MutableMap<String, Any> = mutableMapOf<String, Any>()

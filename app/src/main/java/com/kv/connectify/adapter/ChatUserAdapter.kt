@@ -62,7 +62,7 @@ class ChatUserAdapter(val activity: Activity, val list: MutableList<ChatUserMode
                 .get().addOnCompleteListener { it1 ->
                     if (it1.isSuccessful) {
                         val snapshot = it1.result
-                        Glide.with(activity.applicationContext).load(snapshot.getString("profileImage"))
+                        Glide.with(activity.applicationContext).load(snapshot.getString("profileImage")).into(holder.binding.profileImage)
                         holder.binding.nameTV.text = snapshot.getString("name")
                     } else {
                         Toast.makeText(activity, activity?.resources?.getString(R.string.error) + it1.exception?.message, Toast.LENGTH_SHORT).show()
