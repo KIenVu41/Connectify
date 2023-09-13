@@ -14,7 +14,7 @@
         android:layout_marginTop="@dimen/dp_18"
         android:layout_marginBottom="@dimen/dp_8"
         android:text="@string/message_title"
-        android:textColor="@color/black"
+        android:textColor="?attr/text_color"
         android:textSize="@dimen/sp_20"
         android:textStyle="bold" />
 
@@ -28,6 +28,8 @@
         android:drawablePadding="@dimen/dp_8"
         android:drawableTint="@color/colorGreyDark"
         android:hint="@string/search"
+        android:textColorHint="?attr/background_color"
+        android:textColor="?attr/background_color"
         android:padding="@dimen/dp_12"
         tools:ignore="UnusedAttribute" />
 

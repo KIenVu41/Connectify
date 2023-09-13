@@ -23,7 +23,7 @@
         android:layout_toStartOf="@id/timeTv"
         android:layout_toEndOf="@id/profileImage"
         android:text="Kien"
-        android:textColor="@color/black"
+        android:textColor="?attr/text_color"
         android:textSize="@dimen/sp_18"
         android:textStyle="bold" />
 

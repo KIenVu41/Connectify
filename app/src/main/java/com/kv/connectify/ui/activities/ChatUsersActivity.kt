@@ -14,6 +14,7 @@ import com.kv.connectify.databinding.ActivityChatUsersBinding
 import com.kv.connectify.databinding.ChatUserItemsBinding
 import com.kv.connectify.model.ChatUserModel
 import com.kv.connectify.utils.Constants
+import com.kv.connectify.utils.SharedPrefs
 
 class ChatUsersActivity : AppCompatActivity() {
 
@@ -23,6 +24,13 @@ class ChatUsersActivity : AppCompatActivity() {
     private var list:MutableList<ChatUserModel>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        user = FirebaseAuth.getInstance().currentUser!!
+        val isDarkMode = SharedPrefs.customPrefs(this).getBoolean(Constants.DARKMODE_KEY + user?.uid, false)
+        if (isDarkMode) {
+            setTheme(R.style.darkTheme)
+        } else {
+            setTheme(R.style.AppTheme)
+        }
         super.onCreate(savedInstanceState)
         binding = ActivityChatUsersBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -38,7 +46,6 @@ class ChatUsersActivity : AppCompatActivity() {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
-        user = FirebaseAuth.getInstance().currentUser!!
     }
 
     private fun fetchUserData() {

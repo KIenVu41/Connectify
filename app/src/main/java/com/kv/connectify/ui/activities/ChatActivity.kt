@@ -16,6 +16,7 @@ import com.kv.connectify.adapter.ChatAdapter
 import com.kv.connectify.databinding.ActivityChatBinding
 import com.kv.connectify.model.ChatModel
 import com.kv.connectify.utils.Constants
+import com.kv.connectify.utils.SharedPrefs
 
 class ChatActivity : AppCompatActivity() {
 
@@ -26,6 +27,13 @@ class ChatActivity : AppCompatActivity() {
     private var chatID = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        user = FirebaseAuth.getInstance().currentUser!!
+        val isDarkMode = SharedPrefs.customPrefs(this).getBoolean(Constants.DARKMODE_KEY + user?.uid, false)
+        if (isDarkMode) {
+            setTheme(R.style.darkTheme)
+        } else {
+            setTheme(R.style.AppTheme)
+        }
         super.onCreate(savedInstanceState)
 
         binding = ActivityChatBinding.inflate(layoutInflater)
@@ -67,8 +75,6 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        val auth = FirebaseAuth.getInstance()
-        user = auth.currentUser!!
         list = mutableListOf()
         adapter = ChatAdapter(this, list!!)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
