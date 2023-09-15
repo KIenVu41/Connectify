@@ -5,13 +5,12 @@ import android.app.Dialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.res.ResourcesCompat
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.GridLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
@@ -32,9 +31,7 @@ import com.kv.connectify.ui.activities.MainActivity
 import com.kv.connectify.utils.Constants
 import com.theartofdev.edmodo.cropper.CropImage
 import com.theartofdev.edmodo.cropper.CropImageView
-import java.io.Console
-import java.io.File
-import java.util.jar.Manifest
+
 
 class Add : Fragment() {
 
@@ -43,6 +40,7 @@ class Add : Fragment() {
     private lateinit var adapter: GalleryAdapter
     private lateinit var imageUri: Uri
     private lateinit var dialog: Dialog
+    private val PICKFILE_RESULT_CODE = 100
     private var user: FirebaseUser? = null
 
     override fun onCreateView(
@@ -108,6 +106,15 @@ class Add : Fragment() {
                     }
                 }
         }
+        binding.fileChoose.setOnClickListener {
+            val chooseFile = Intent(Intent.ACTION_GET_CONTENT)
+            chooseFile.addCategory(Intent.CATEGORY_OPENABLE)
+            chooseFile.type = "image/*"
+            startActivityForResult(
+                Intent.createChooser(chooseFile, "Choose a file"),
+                PICKFILE_RESULT_CODE
+            )
+        }
         binding.backBtn.setOnClickListener {
             (activity as? MainActivity)?.binding?.tabLayout?.getTabAt(0)?.select()
         }
@@ -154,20 +161,6 @@ class Add : Fragment() {
                 .withPermissions(android.Manifest.permission.WRITE_EXTERNAL_STORAGE, android.Manifest.permission.READ_EXTERNAL_STORAGE)
                 .withListener(object: MultiplePermissionsListener {
                     override fun onPermissionsChecked(p0: MultiplePermissionsReport?) {
-                        p0?.let {
-                            val file = File(Environment.getExternalStorageDirectory().toString() + "/Download")
-                            if (file.exists()) {
-                                val files = file.listFiles()
-                                list.clear()
-
-                                for (file1 in files) {
-                                    if (file1.absolutePath.endsWith(".jpg") || file1.absolutePath.endsWith(".png")) {
-                                        list.add(GalleryImages(Uri.fromFile(file1)))
-                                    }
-                                }
-                                adapter.notifyDataSetChanged()
-                            }
-                        }
                     }
 
                     override fun onPermissionRationaleShouldBeShown(
@@ -196,6 +189,19 @@ class Add : Fragment() {
                     binding.nextBtn.visibility= View.VISIBLE
                 }
             }
+        } else if (requestCode == PICKFILE_RESULT_CODE) {
+            if (resultCode == RESULT_OK) {
+                list?.let {
+                    if (it.size > 0) {
+                        it.clear()
+                    }
+                }
+                val uri = data?.data
+                uri?.let {
+                    list.add(GalleryImages(it))
+                    adapter.notifyDataSetChanged()
+                }
+            }
         }
     }
 
@@ -203,5 +209,6 @@ class Add : Fragment() {
         super.onDestroyView()
         binding.nextBtn.setOnClickListener(null)
         binding.backBtn.setOnClickListener(null)
+        binding.fileChoose.setOnClickListener(null)
     }
 }
