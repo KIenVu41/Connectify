@@ -7,6 +7,7 @@
     tools:context=".ui.activities.ChatUsersActivity"
     tools:ignore="HardcodedText">
 
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

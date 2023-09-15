@@ -37,7 +37,9 @@
                 android:layout_height="wrap_content"
                 android:text="Name......"
                 android:textSize="@dimen/sp_18"
-                android:textStyle="bold" />
+                android:textStyle="bold"
+                app:drawableRightCompat="@drawable/baseline_local_phone_24"
+                android:drawablePadding="@dimen/dp_24"/>
 
             <TextView
                 android:id="@+id/statusTV"
@@ -78,6 +80,8 @@
             android:layout_height="wrap_content"
             android:background="@drawable/text_box"
             android:backgroundTint="@color/colorGreyLight"
+            android:textColorHint="?attr/background_color"
+            android:textColor="?attr/background_color"
             android:hint="@string/start_chat"
             android:layout_marginEnd="@dimen/dp_4"
             android:layout_toStartOf="@id/sendBtn"

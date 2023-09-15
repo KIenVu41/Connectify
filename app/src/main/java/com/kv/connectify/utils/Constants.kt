@@ -18,4 +18,6 @@ object Constants {
     val PREF_DIRECTORY = "connectify_direct"
     val LOCALIZE_KEY = "localize"
     val DARKMODE_KEY = "darkmode_"
+    val APP_ID = "1f4bb349ea1641309a259d5716f6baec"
+    val CHANNEL_NAME = "ChannelConnectify"
 }

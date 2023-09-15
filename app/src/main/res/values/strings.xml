@@ -71,5 +71,5 @@
     <string name="dark_mode">Dark mode</string>
     <string name="logout">Đăng xuất</string>
     <string name="dialog_qr">Mã QR của bạn</string>
-
+    <string name="agora_app_id">1f4bb349ea1641309a259d5716f6baec</string>
 </resources>

@@ -1,5 +1,6 @@
 package com.kv.connectify.ui.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -79,6 +80,10 @@ class ChatActivity : AppCompatActivity() {
         adapter = ChatAdapter(this, list!!)
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.adapter = adapter
+        binding.nameTV.setOnClickListener {
+            val intent = Intent(this, VideoCallActivity::class.java)
+            startActivity(intent)
+        }
     }
 
     private fun loadUserData() {

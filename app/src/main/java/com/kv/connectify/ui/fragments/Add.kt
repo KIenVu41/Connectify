@@ -163,9 +163,9 @@ class Add : Fragment() {
                                 for (file1 in files) {
                                     if (file1.absolutePath.endsWith(".jpg") || file1.absolutePath.endsWith(".png")) {
                                         list.add(GalleryImages(Uri.fromFile(file1)))
-                                        adapter.notifyDataSetChanged()
                                     }
                                 }
+                                adapter.notifyDataSetChanged()
                             }
                         }
                     }

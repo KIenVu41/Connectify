@@ -148,7 +148,7 @@ class Home : Fragment() {
 
         storiesModelList = mutableListOf<StoriesModel>()
         storiesModelList!!.add(StoriesModel("","","","",""))
-        storiesAdapter = StoriesAdapter(requireActivity(), storiesModelList!!)
+        storiesAdapter = activity?.let { StoriesAdapter(it, storiesModelList!!) }
         binding.storiesRecyclerView.adapter = storiesAdapter
 
         val auth = FirebaseAuth.getInstance()
@@ -242,6 +242,7 @@ class Home : Fragment() {
 
     private fun loadStories(followingList: List<String>) {
         storiesModelList?.clear()
+        storiesModelList!!.add(StoriesModel("","","","",""))
         val query = FirebaseFirestore.getInstance().collection(Constants.STORIES)
         query.whereIn("uid", followingList).addSnapshotListener { value, _ ->
             value?.let {

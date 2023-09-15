@@ -20,4 +20,6 @@
     <color name="border_round_image">#434343</color>
     <color name="darkPrimary">#212121</color>
     <color name="darkPrimaryDark">#000000</color>
+    <color name="localBackground">#827b92</color>
+    <color name="remoteBackground">#484258</color>
 </resources>
